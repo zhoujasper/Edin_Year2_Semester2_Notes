@@ -32,15 +32,6 @@ The FPM notes include the following supporting figure:
 └── README.md
 ```
 
-## Naming convention
-
-Files are named using the pattern:
-
-```text
-<Course> Note - Jasper Zhou.<ext>
-<Course> Note - Version YYYY-MM-DD - Jasper Zhou.<ext>
-```
-
 ## How to use
 
 Read the compiled PDFs directly, or compile the `.tex` files with XeLaTeX.
