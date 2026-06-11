@@ -1,0 +1,581 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{ctex}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{multicol} % 使用分栏宏包
+\usepackage{makecell} % 换行
+
+% 设置字体
+\usepackage{unicode-math}
+\setmainfont{Cambria}
+\setmathfont{Cambria Math}
+
+% 调整页面布局
+\usepackage[a4paper, top=0.5cm, bottom=1cm, left=1cm, right=1cm]{geometry}
+\setlength{\footskip}{15pt}
+
+% 设置页脚/页眉
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyfoot[C]{Copyright By Jingren Zhou and Qikang Fan | Page \thepage}
+\fancyhead{}
+
+% 去除线
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% 设置 section/subsection 之间的行间距
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+
+% 调整标题上下间距
+\usepackage{titling}
+\setlength{\droptitle}{-2cm} % 负值表示向上移动
+
+% 设置标题，作者，时间
+\title{FPM Note}
+\author{}
+\date{}
+
+% 正文
+\begin{document}
+
+
+% 标题
+\maketitle
+\thispagestyle{fancy}
+\vspace{-3.5cm}
+
+% 字体大小
+\fontsize{11pt}{13pt}\selectfont
+\setlength{\parindent}{8pt}
+
+\section{Basic Knowledges} % Basic Knowledge
+
+\textbf{Completeness Axiom}: If $\exists$ UP $\Rightarrow$ LUB (sup) ; If $\exists$ LB $\Rightarrow$ GLB (inf).
+
+\textbf{Archimedean Property}: $\forall x \in \mathbb{R}^+ \Rightarrow \exists n\in \mathbb{N} \ s.t. \ n>x.$
+
+\textbf{Eventually True}: $P_n$ is eventually true iff $\exists$ an index N s.t. $P_n$ true for $n>N.$
+
+\textbf{Important Inequation}: $|x+y|\leq|x|+|y| \ \ ; \ \ |x-y|\geq|x|-|y| \ \ ; \ \ ||x|-|y|| \leq|x \pm y|.$
+
+\textbf{Bernoulli's Inequality}: If $\alpha>0,\delta\geq-1$. Then (1) $(1+\delta)^\alpha\leq 1+\delta\alpha,\alpha\in(0,1]$ ; (2) $(1+\delta)^\alpha\geq 1+\delta\alpha,\alpha\in[1,+\infty)$
+
+\textbf{Injective Surjective}: Let $f:S \rightarrow T$ : \ If \textbf{1-1} : $|S|\leq|T|$ \ ; \ If \textbf{onto} : $|S|\geq|T|$ \ ; \ $|S|^{|T|}$ maps for $S \rightarrow T.$
+
+$\cdot$ If S and T be two finite sets. Then $|S \times T|=|S||T|$ \ \ $\cdot$ f has inverse iff it is bijection.
+
+\textbf{Countable}: S is countable if $\exists $ bijective $f:\mathbb{N}\rightarrow S$ \ \ ; \ \ If S is finite $\Rightarrow$ at most countable.
+
+$\cdot$ If $S_1,S_2$ is countable $\Rightarrow S_1 \cup S_2$ is countable and $S_1 \times S_2$ is countable. \ \ ps: $\mathbb{R}$ is uncountable.
+
+\textbf{Converge Sequence}: If sequence is convergent $\Rightarrow$ it is bounded.
+
+\textbf{Permutation}: $f=(a_1a_2a_3\cdots a_k)=(a_1a_2)(a_2a_3)\cdots(a_{k-1}a_k)=(a_1a_k)(a_1a_{k-1})\cdots(a_1a_2)$ \ ; \ $f^{-1}=(a_{k}a_{k-1}\cdots a_1).$
+
+$\cdot$ If $f=gh$ then $f^{-1}=h^{-1}g^{-1}$
+
+\textbf{Monotone Convergent Theorem}: 单调有界必收敛。
+
+
+\section{Analysis} % Analysis
+\subsection{Sequence Limit}
+
+\textbf{Def of Seq Limit}: $(x_n)_{n\in\mathbb{N}}$ is convergent to $a$ iff $\forall\varepsilon>0,\exists N>0 \ s.t. \ |x_n-a|<\varepsilon$ for all $n>N$
+
+$\cdot$ If $\lim x_n$ exist then so does $\lim |x_n|=|\lim x_n|$ \ \ \ ps:$\lim x_n=0 \ \Leftrightarrow \ \lim |x_n|=0$
+
+\textbf{Operation in Seq Limit}: Squeeze Theorem ; Monotone Convergence Theorem ; $\lim \alpha x_n=\alpha\lim x_n$
+
+$\cdot$ $\lim (x_n + y_n)=\lim x_n + \lim y_n$ ; $\lim x_n \cdot y_n=\lim x_n \cdot \lim y_n$ ; $\lim \frac{x_n}{y_m}=\frac{\lim x_n}{\lim y_n},y_n \ne 0$
+
+$\cdot$ \textbf{Comparison Theorem (For Seq)}: If $\lim x_n,y_n$ exist, and $x_n\leq y_n$ for all $n\geq N$ then $\lim x_n\leq\lim y_n.$
+
+\textbf{Useful Seq Limit}: $\lim \frac{1}{n^p}=0,p>1$ \ ; \ $\lim a^n=0,|a|<1$ \ ; \ $\lim n^\frac{1}{n}=1$ \ ; \ $\lim a^\frac{1}{n}=1,a>0$
+
+\textbf{Theorem: 有限上/下界的区间内,一定有一收敛于上/下界的数列.}
+
+\textbf{Theorem}: For $(x_n)_{n\in\mathbb{N}}$, if it's unbounded increasing $\Rightarrow \lim x_n=+\infty$ 同理 unbounded decreasing.
+
+\textbf{Def of Seq Divergence}: $(x_n)_{n\in\mathbb{N}}$ is divergent to $+\infty$ iff $\forall M>0,\exists N \ s.t. \ x_n>M$ for all $n>N$ \ ps:同理$-\infty.$
+
+\subsection{Subsequences}
+
+\textbf{Def of Subsequences}: $(x_{n_k})$ where $n_1<n_2<n_3<\cdots$ is an increasing sequence of natural numbers.
+
+\textbf{Subsequence Theorem}: In each case, the subsequence can be taken to be monotonic.
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item $\exists a \in \mathbb{R} \ s.t. \ \forall \varepsilon > 0$, there are infinitely many $n \in \mathbb{N} \ s.t. \ |x_n - a|<\varepsilon$ $\Leftrightarrow \ \exists$ subsequence of $(x_n) \ s.t. \ \lim\ x_{n_k}=a$
+    \item $(x_n)_{n \in \mathbb{N}}$ is not bounded above (below) $\Leftrightarrow$ \ $\exists$ subsequence of $x_n \ s.t. \ \lim x_{n_k}=\infty \ (-\infty)$
+    \item If $\lim x_n=L \Rightarrow \forall x_{n_k} \ , \lim x_{n_k}=L$
+\end{enumerate}
+
+\textbf{Bolzano-Weierstrass}: $\forall$ bounded sequence (real number) has a convergent subsequence.
+
+\subsection{Inifinite Series}
+
+\textbf{Def of Inifinite Series}: Let $s_n=\sum\limits_{k=1}^{n}a_k,$ then Inifinite series $\sum\limits_{k=1}^{\infty}a_k=\lim s_n$
+
+\textbf{Operation in Inifinite Series}: $\sum (a_n+b_n)=\sum a_n+\sum b_n$ and $\sum (\alpha a_n)=\alpha \sum a_n$
+
+$\cdot$ \textbf{p-Test}: $\sum \frac{1}{n^p}$ convergent iff $p>1$ \ \ \textbf{Root Test} \ \ \textbf{Ratio Test}$_{|n|^{1/n},|n+1/n|}$ \ \ \textbf{Geometric Series}: $\sum p^n$ converges iff $|p|<1$
+
+$\cdot$ If $a_n\geq 0$ , $\sum a_n$ converges iff its partial sum is bounded.($\left|\sum_{k=1}^{n}a_k\right|<M$) \ \ ps:就是用了MCT
+
+\textbf{Divergence Test}: If $\lim a_n\ne 0 \Rightarrow \sum a_n$ diverges. \ \ (If $\sum a_n$ convergent $\Rightarrow \lim a_n=0.$)
+
+\textbf{Comparison Test}: If $0<a_n<b_n$, $\sum b_n$ convergent $\Rightarrow \sum a_n$ also ; $\sum a_n$ divergent $\Rightarrow \sum b_n$ also.
+
+$\cdot$ \textbf{Limit Comparison Test}: If $a_n,b_n\geq 0,\lim \frac{a_n}{b_n}=L>0 \ \Rightarrow$ If $L\in(0,\infty)$: $\sum a_n$ convergent iff $\sum b_n$ also.
+
+\ \ \ $\cdot$ If $L=0 : \sum b_n$ convergent $\Rightarrow \sum a_n$ also. \ \ $L=\infty : \sum b_n$ divergent $\Rightarrow \sum a_n$ also.
+
+\textbf{Integral Test}: Let $f:[1,\infty)\rightarrow\mathbb{R}$ is 非负递减, $a_n=f(n)$. Then $\sum a_n$ converges iff $\int_{1}^{\infty}f(x)dx<\infty.$
+
+\textbf{Absolutely Convergence}: $\sum a_n$ convergent absolutely iff $\sum |a_n|$ convergent. \ \ \textbf{If convergent abs $\Rightarrow$ convergent.}
+
+\textbf{Alternating Series Test}: If $a_n$ decreasing, $a_n\geq 0,\lim a_n = 0$. Then $\sum (-1)^{n-1}a_n$ convergent.
+
+\textbf{Cauchy's Condensation Test}: If $a_n\geq 0,a_n$ decreasing, $\Rightarrow \ [\ \sum a_n convergent \Leftrightarrow \sum 2^na_{2^n} \ also \ ]$
+
+\textbf{Cauchy Product}: If $\sum a_n$ convergent abs , $\sum b_n$ convergent $\Rightarrow \ (\sum a_n)(\sum b_n)=\sum c_n, c_n=\sum\limits_{i=1}^{n}a_i \times \sum\limits_{i=1}^{n}b_i = \sum\limits_{i=1}^{n}a_ib_{n-i}$
+
+$\cdot$ By Cauchy product $e^{x+y}=e^xe^y$ and $log(xy)=log(x)+log(y)$ \ \ \ \ \ $\lim\limits_{n\to\infty}(1 + \frac{1}{n})^n=e$ \ \ \ $\lim\limits_{n\to\infty}\frac{n}{\sqrt[n]{n!}}=e$ q
+
+\textbf{Cauchy's Criterion (Sequence)}: $\sum a_n$ convergent iff $\forall \varepsilon>0,\exists N$ s.t. $m\geq n\geq N$, $|a_n+\cdots+a_m|<\varepsilon$
+
+\subsection{Continuity}
+
+\textbf{Def of Continuity}: Let $f:A \to B$, $f$ continuous at $x_0$ iff:
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item \textbf{1st Def}: $\forall\varepsilon>0,\exists\delta>0 \ s.t. \ \forall x \in A, \ |x-x_0|<\delta \ \Rightarrow |f(x)-f(x_0)|<\varepsilon.$ \ \ \ \ \ \ \ \ ps: $x$ 可以等于 $x_0$
+    \item \textbf{2nd Def}: $\forall (x_n)_{n\in \mathbb{N}}\in A,\ if \ \lim x_n = x_0 \ \Rightarrow \lim f(x_n)=f(x_0)$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ps: $x$ 可以等于 $x_0$
+\end{enumerate}
+
+\textbf{One-side Continuity}: Let $f:A \to B$ continuous from left (or right) at $x_0$ iff: {\small (也可以用sequence来定义)}
+
+\ \ \ \ \ \ \ $\forall\varepsilon>0,\exists\delta>0 \ s.t. \ \forall x\in A , |x-x_0|<\delta , and \ x\leq x_0 \ (or \ x\geq x_0) \ \Rightarrow \ |f(x)-f(x_0)|<\varepsilon$
+
+\textbf{Operation in Continuity}: If $f$ is continuous at $x_0:$ so does $f+g$ , $\frac{f}{g}$ , $fg$(就单纯的乘) , $f\circ g$.
+
+$\cdot$ All polynomial and rational functions (coefficent $\in \mathbb{R}$) are continuous functions.
+
+\textbf{Sign Preserving Property}: If $g$ continuous at $x_0$, $g(x_0)\ne 0$
+
+\ \ \ \ \ \ \ $\Rightarrow\exists\delta>0 \ s.t. \ \forall x,|x-x_0|<\delta,sign(g(x))=sign(g(x_0))$ \ \ \ Moreover, $|g(x)|>\frac{1}{2}|g(x_0)|$
+
+\textbf{Theorem}: If $f:[a,b]\to\mathbb{R}$ is a continuous function,then f is closed and bounded.
+
+\textbf{The Extreme Value Theorem}: If $f:[a,b]\to\mathbb{R}$ is continuous, then $f$ has a max and min value.
+
+\textbf{Bolzano Theorem}: If $f:[a,b]\to\mathbb{R}$ is continuous with $f(a)f(b)<0 \ \Rightarrow\exists c\in (a,b) \ s.t. \ f(c)=0$
+
+\textbf{Intermediate Value Theorem}: $f:[a,b]\to\mathbb{R}$ is continuo,$f(a)\ne f(b)$, $y\in[f(a),f(b)]$.$\Rightarrow \exists c\in(a,b) \ s.t. f(c)=y$
+
+$\cdot$ If $f:[a,b]\to [a,b]$ is continuous. $\Rightarrow \exists c\in(a,b) \ s.t. \ f(c)=c$
+
+\textbf{Theorem} If $f:\mathbb{I}\to\mathbb{R}$ is continuous and injective. Then $f$ is strictly monotone and its inverse also.
+
+\textbf{Theorem} If $f: Interval \to Interval$. is strictly increasing, then f is continuous on it.
+
+\subsection{Limits of Functions}
+
+\textbf{Def of Limit Point}: $x_0$ is a limit point of A iff: 
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item \textbf{1st Def}: $\forall \delta>0,\exists x,x\ne x_0$ s.t. $|x-x_0|<\delta$
+    \item \textbf{2nd Def}: $\exists (x_n)_{n\in\mathbb{N}},x_n\ne x_0$ s.t. $\lim x_n=x_0$
+\end{enumerate}
+
+\textbf{Def of Function Limit}: $\lim\limits_{x\to x_0}f(x)=L$ iff 
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item \textbf{1st Def}: $\forall\varepsilon>0,\exists\delta>0 \ s.t. \ \forall x \in A, \ |x-x_0|<\delta,x\ne x_0 \ \Rightarrow |f(x)-L|<\varepsilon.$
+    \item \textbf{2nd Def}: $\forall x_n,x_n\ne x_0 \ s.t. \ \lim\limits_{n\to\infty}(x_n)=x_0, then \ \lim\limits_{n\to\infty} f(x_n)=L$.
+\end{enumerate}
+
+\textbf{Operation in function limit}: 和 continuity 一样 + Squeeze theorem \ \ \ \ \ \ \ \ \ ps: 同理也有Sign Preserving Property.
+
+$\cdot$ $(+\infty)+(+\infty)=+\infty$ \ \ \ \ \ $x \pm (\infty)=\pm \infty$ \ \ \ \ \ $x \cdot (\pm\infty)=\pm \infty$ \ \ \ \ \ $(+\infty)(-\infty)=-\infty$
+
+$\cdot$ If $\lim f(x)=L$, g is continuous at L, then $\lim g(f(x))=g(L)$
+
+\textbf{Limit as $x\to +\infty$}: $\lim\limits_{x\to +\infty}f(x)=L$ iff $\forall\varepsilon>0,\exists M$ s.t. $x>M$ we have $|f(x)-L|<\varepsilon$
+
+\textbf{Limit as $f(x)\to +\infty$}: $\lim\limits_{x\to x_0}f(x)=\infty$ iff $\forall M>0,\exists\delta$ s.t. $\forall 0<|x-x_0|<\delta$, we have $f(x)>M$
+
+\textbf{One / Two -sided Limit}: \textbf{Two}: $\lim\limits_{x\to a}f(x)=\lim_{x\to a,x\in I \backslash \{a\}}f(x)$ \ \ \ \ \ \textbf{One(Left)}: $\lim\limits_{x\to a^-}f(x)=\lim_{x\to a,x\in I \backslash (a,+\infty)}f(x)$
+
+$\cdot$ $\lim\limits_{x \to a^+}f(x)=L$ iff $\forall \varepsilon>0, \exists \delta>0 \ s.t. \ \forall a<x<a+\delta, |f(x)-L|<\varepsilon$
+
+$\cdot$ $\lim\limits_{x\to a}f(x)$ exists iff $\lim\limits_{x \to a^+}f(x)=\lim\limits_{x \to a^-}f(x)=L$
+
+\textbf{Theorem}: $f$ is continuous at a iff $\lim\limits_{x\to a}f(x)=f(a)$
+
+\textbf{Comparison Theorem (for func)}: If $f(x)\leq g(x)$ (or $f(x)< g(x)$), for all $x\in I\backslash\{a\}$, then $\lim\limits_{x\to a}f(x)\leq \lim\limits_{x\to a}g(x)$
+
+\textbf{Isolated Point}: $x_0$ is an isolated point of $A$ iff $(x_0-\delta,x_0+\delta)\cap A={x_0}$  ps:$x_0$点独立
+
+$\cdot$ If $x_0$ is an isolated point of $A$, then $f$ is continuous at $x_0$. \ \ \ \ \ \ ps: But $\lim_{x\to x_0}f(x)$ doesn't make sense.
+
+\textbf{Def of Removable and non-Removable Discontinuites}: 
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item \textbf{Continuous}: $\lim_{x\to x_0}f(x)=f(x_0)$
+    \item \textbf{Removable}: $\lim_{x\to x_0}f(x)=L\ne f(x_0)$
+    \item \textbf{non-Removable}: $\lim_{x\to x_0}f(x)$ not exist.
+\end{enumerate}
+
+$\cdot$ ps:$a^n-b^n=(a-b)(a^{n-1}+a^{n-2}b+\cdots+ab^{n-2}+b^{n-1})$
+
+\subsection{Differentiability on $\mathbb{R}$}
+
+\textbf{Def of Derivative}: A real function $f$ is differentiable at point $a\in \mathbb{R}$ if:
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item \textbf{1st Def}: $f'(a)=\lim\limits_{x\to a}\frac{f(x)-f(a)}{x-a}$ exist. \ \ \ \ \ \ \ ps: Difference quotient at $x_0$: $Q(x)=\frac{f(x)-f(x_0)}{x-x_0}$
+    \item \textbf{2nd Def}: $f'(a)=\lim\limits_{h\to 0}\frac{f(a+h)-f(a)}{h}$ exist.
+    \item \textbf{Higher derivative Def}: $f^{(n+1)}(a)=(f^{(n)}(a))'$
+\end{enumerate}
+
+\textbf{Linear Approximation}: Linear approximation of $f$ near $x_0$ is: $f(x_0)+f'(x_0)(x-x_0)$
+
+\textbf{Theorem}: If $f$ is differentiable at $a$, then $f$ is continuous at $a$.
+
+\textbf{Def fo Differentiable (On I)}: Let $I$ be a non-degenerate interval. (即不是一个点)
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item $f:I\to\mathbb{R}$ is said to be differentiable on I if $f'_I(a):=\lim\limits_{x\to a}\frac{f(x)-f(a)}{x-a}$ exist for $\forall a\in I$
+    \\ $ps:$ 如果不在endpoint $f_I'=f'$, 在端点定义：$\lim\limits_{h\to 0^+}\frac{f(a+h)-f(a)}{h}$ and $\lim\limits_{h\to 0^-}\frac{f(a+h)-f(a)}{h}$
+    \item $f$ is continuously differentiable := $f$ differentiable + $f'$ continuous on $I$.
+\end{enumerate}
+
+\textbf{Def of $C^n$}: $C^n(I),n\in \mathbb{N}\cup\{0\}$ := functions which (1) n-th derivative exists (2) derivative continuous on I.
+
+$\cdot$ $C^\infty(I)=\cap_{n\in\mathbb{N}\cup\{0\}}C^n$ \ \ \ \ \ \ and \ \ \ \ \ \ $C^m\subset C^n$ if $m>n$
+
+\textbf{Fermat Theorem}: $f$ differentiable at open interval, f has a max (min) point at $c$ $\Rightarrow$, $f'(c)=0$ {\footnotesize ps:Critical point:$f'(x)=0$}
+
+\textbf{Rolle's Theorem}: If $f$ continuous on $[a,b]$, differentiable on $(a,b)$ and $f(a)=f(b)$ \ \ Then: $\exists c\in(a,b)$ s.t. $f'(c)=0$
+
+\textbf{Mean Value Theorem (MVT)}: Let $f,g$ continuous on $[a,b]$ and differentiable on $(a,b)$: \ \ \ \text{\footnotesize ps: a=b时依然成立}
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item $\exists c\in(a,b)$ s.t. $\frac{f(b)-f(a)}{b-a}=f'(c)$ \ \ \ \ \ \ ps: Lagrange's Mean Value Theorem
+    \item $\exists c\in(a,b)$ s.t. $\frac{f(b)-f(a)}{g(b)-g(a)}=\frac{f'(c)}{g'(c)}$ \ \ \ \ \ \ ps: Cauchy's Mean Value Theorem (参数方程的 Mean value Theorem)
+\end{enumerate}
+
+\textbf{IVT (for deriv) / (Darboux Theorem)}: If $f$ differentiable in $I$ $\Rightarrow\forall m\in(f'(a),f'(b))$ we have: $\exists c$ s.t. $f'(c)=m$
+
+$\cdot$ \textbf{Corollary}: If $f$ differentiable in $I$ and $f'(x)\ne 0$, then $f'$ has constant sign.
+
+\textbf{Monotone Theorem}: Let $f$ continuous on $[a,b]$ and differentiable on $(a,b)$:
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item If $\forall x\in(a,b),f'(x)>0 \ \Rightarrow \ f$ is strictly increasing on $[a,b]$
+    \item If $\forall x\in(a,b),f'(x)<0 \ \Rightarrow \ f$ is strictly decreasing on $[a,b]$
+    \item If $\forall x\in(a,b),f'(x)=0 \ \Leftrightarrow \ f$ is constant on $[a,b]$
+\end{enumerate}
+
+\textbf{Theorem}: If $f$ is 1-1 and continuous $\Rightarrow$ f is strictly monotone. \ \ \ and $f^{-1}$ is continuous and strictly monotone.
+
+\textbf{Inverse Function Theorem}: Let $f$ differentiable in $I$ (open interval), and $\forall x,f'(x)\ne 0$:
+
+$\cdot$ \textbf{1.} $f(I)$ is open interval. \ \ \ \ \ \textbf{2.} $f$ is invertible. \ \ \ \ \ \textbf{3.} $f^{-1}$ is differentiable and $(f^{-1})'(y)=\frac{1}{f'(f^{-1}(y))}$
+
+\textbf{Second Deriv Test}: $f$ twice continuously differentiable in $I$,$f'(x_0)=0$: \textbf{1.} $f''(x_0)>0$ $(<0)$ local min (max) point.
+
+\subsection{L'Hospital's Rule and Taylor's Theorem}
+
+\textbf{L'Hospital's Rule}: If $f,g$ differentiable on $I\backslash\{a\}$ and $g(x),g'(x)\ne 0$ for $\forall x\in I\backslash\{a\}$:
+
+If $\lim\limits_{x\to a}\frac{\infty}{\infty}$ or $\lim\limits_{x\to a}\frac{0}{0}$. Then: $\lim\limits_{x\to a}\frac{f(x)}{g(x)}=\lim\limits_{x\to a}\frac{f'(x)}{g'(x)}$
+
+\textbf{Taylor's Theorem}: If $f:(a,b)\to\mathbb{R}$ is differentiable function at $x_0\in(a,b)$:
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item $P^{f,x_0}_{n}(x)=f(x_0)+\sum\limits_{k=1}^{n}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$ \ \ \ (Taylor's polynomial of degree $n$ at $x_0$)
+    \item If $f^{(n+1)}$ exists on $(a,b)$, then: $\exists c\in(x,x_0)$ s.t. $f(x)=P^{f,x_0}_{n}(x)+\frac{f^{(n+1)}(c)}{(n+1)!}(x-x_0)^{n+1}$
+\end{enumerate}
+
+$\cdot$ Special Example: $f(x)=e^{-\frac{1}{x}},x>0;0,x\leq 0$ {\small ($f^{(n)}=0$ for all n, and $\sum\limits_{n=0}^{\infty}\frac{f^{(n)}(0)}{n!}x^n=0\ne f(x)$)}
+
+$\cdot$ Special Example: $f(x)=\sum_{n=0}^{\infty}e^{-n}cos(n^2x)$ {\small(A Taylor Series that converges only at the center $x_0=0$)}
+
+\textbf{Trigonometric function}: we define function function sin, cos by:
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item $sin(x)=\sum\limits_{n=0}^{\infty}(-1)^n\frac{x^{2n+1}}{(2n+1)!}=x-\frac{x^3}{3!}+\cdots$
+    \item $cos(x)=\sum\limits_{n=0}^{\infty}(-1)^n\frac{x^{2n}}{(2n)!}=1-\frac{x^2}{2!}+\cdots$
+\end{enumerate}
+
+$\cdot$ The Taylor Series of $f$ does not always converge to $f$. \ \ \ \ \ e.g. $f(x)=e^{-1/x},x>0;0,x\leq0$
+
+\section{Group} % Group
+\subsection{Graphs}
+
+\textbf{Def of Graphs $\Gamma$}: A finite set of vertices joined by edges. \textbf{Valency} is number of edges emerging from a vertex.
+
+\textbf{Isomorphism (for Graphs)}: $f:\Gamma_1\to\Gamma_2$ is isomophism iff it is a bijection. \ ps:vertex对应edge数一样;不唯一.
+
+\textbf{Symmetry of Graph}: It's a isomophism from the graph to itself. (Always Faithful)
+
+$\cdot$ If $\Gamma_1 \ncong \Gamma_2$ then $Sym(\Gamma_1\cup\Gamma_2)=Sym(\Gamma_1)Sym(\Gamma_2)$
+
+\subsection{Group and Basic Groups}
+
+\textbf{Binary Operation ($\odot$)}: A binary operation $\odot$ on set A is: $\forall a,b\in A$ then $a\odot b \in A$ and unique.
+
+\textbf{Def of Group $(G,\odot)$}: \textbf{G1} Closure: $\forall a,b\in G,then \ a \ \odot b\in G$ \ \textbf{G2} Associativity: $(a\odot b)\odot c=a\odot (b\odot c)$
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{G3} Identity: $\exists e\in G \ s.t. \ e\odot g=g\odot e=g$ \ \textbf{G4} inverse: $\forall g\in G \ there \ \exists g^{-1}\in G$
+
+$\cdot$ \textbf{Order of G $|G|$}: The \# of elements.  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ps:$|G\times H|=|G||H|$
+
+$\cdot$ \textbf{Order of elements in G $o(g)$}: min \# n \ \ s.t. $g^n=e.$ \ \ \ \ \ ps:$o(g,h)=lcm\left(o(g),o(h)\right)$
+
+$\cdot$ \textbf{Abelian Group}: If G is a group and $\forall g,h\in G$, we have $g\odot h = h \odot g.$
+
+$\cdot$ The set of symmetries of a graph forms a group.  \ \ \ \ \ \ \ \ If $G,H$ are groups, then $G\times H$ also.
+
+\textbf{Cyclic Group $\langle g\rangle$}: If $G=\{ ...,g^{-2},g^{-1},e,g^1,g^2,...\}$
+
+\textbf{Dihedral Group $(D_n)$}: The group of symmetries of a regular n-sided polygon. \ \ $|D_n|=2n$ \ \ \ \ \ \ \ \ \ \ we have: $hg^k=g^{n-k}h$
+
+\textbf{Symmetric Group $(S_n \ , \ S_X)$}: All bijection from $\{1,2,...,n\}$ or set A to itself. \ \ \ \ \ \ $|S_n|=n!$
+
+\textbf{General Linear Group $(GL_n)$}: The $n\times n$ real matrix A , $det(A)\ne 0$.
+
+$\cdot$ $SL_n$: $\{A\in GL_n \ | \ det(A)=\pm 1\}$  \ \ \ \ \ \ $SO_n$: $\{A\in SL_n \ | \ A^T=A^{-1} \}$ \ \ ps:$SO_2$:圆的rotation对称.
+
+$\cdot$ \textbf{Orthogonal Group $(O_n)$}: The $n\times n$ real matrix A , $A^{-1}=A^T$ , $det(A)=\pm 1$ \ \ ps: $O_2$:圆的所有对称
+
+\subsection{More on Cyclic Group, Subgroups, Cosets, Lagrange's Theorem}
+
+\textbf{Def of Subgroup}: If $H\subseteq G$,H,G are group, then H is a subgroup of G. \ \ \ ps:Trivial subgroup:$\{e\}$
+
+\textbf{Def of Nontrivial / proper subgroup}: A subgroup which is not Identity or G. / is not G
+
+\textbf{Subgroup Criterion}: If $H\subseteq G$,G is group.\textbf{SG1} $H\ne \emptyset$ \textbf{SG2} $\forall g,h\in H, \ gh\in H$ \textbf{SG3} $\forall h\in H, \ h^{-1}\in H$ $\Rightarrow$ H is subgroup.
+
+$\cdot$ If H,K are two subgroups of G, then $H\cap K$ dose also.
+
+\textbf{Proposition of Cyclic Group}: Let $G=\langle g \rangle$
+
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item Every cyclic group G is abelian. \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Every subgroup of G is cyclic.
+    \item G is a cyclic group of order n iff G has an element of order n.
+    \item If G and H are cyclic group, then $G\times H$ is cyclic iff $\gcd(|G|,|H|)=1$
+\end{enumerate}
+
+\textbf{Def of Cosets}: Let H be a subgroup of G, G is a group, $g\in G,Left \ Coset:gH=\{gh|h\in H\}.$ Right Coset:$Hg.$
+
+\textbf{Proposition of Coset}: Let H,K be subgroup of group G. \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{Index of H} $=|G/H|=\frac{|G|}{|H|}$
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item $\forall h\in H,hH=H $ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $\forall g,h\in G, If \ h\in gH, \ then \ hH=gH$
+    \item There is a bijective function $\theta : H\to gH$ Thus, $|gH|=|H|.$
+    \item The set of Left Cosets of H in G called $G/H$ \ \ \ \ \ \ \ \ \ \ \ \ e.g. $G=\mathbb{Z}_4,H=\{0,2\}$ then $G/H=\{\{0,2\},\{1,3\}\}$
+\end{enumerate}
+
+\textbf{If \textasciitilde \ is an Equvalence Relation on a Set X, then X is partitioned into pieces (which is the Equvalence Classes)}
+
+\textbf{Lagrange's Theorem}: If G is a group, H is a subgroup of G. Then we have $|G|=m|H|,m\in \mathbb{Z}.$
+
+$\cdot$ \textbf{Corollary}: Let $g\in G$, G is a group. \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{Fermat's Little Theorem}: If p is prime, $p \nmid a$,then $a^{p-1}\equiv 1 \ mod \ p$
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item $o(g) \ | \ |G|$ \ \ \ \ \ \ \ \ \ \ \ \ \ $g^{|G|}=e.$
+    \item If $|G|$ is prime. Then G is cyclic group. \ \ \ and the subgroup of G is only $\{e\}$ and $G$
+    \item If $|G|<6$, then G is abelian. \ \ \ \ \ \ \ \ \ \ \ \ \ \ ps:$D_3$ is the smallest non-abelian group.
+\end{enumerate}
+
+\subsection{Homomorphism and Isomorphism, Kernel, Image, Normal}
+
+\textbf{Def of Homomorphism}: A map $\phi:G\to H$ is homomorphism iff $\forall x,y\in G \ \ \phi(xy)=\phi(x)\phi(y)$
+
+$\cdot$ ps: Nonconstant homomorphism: $\phi(x)=c$ for all x.
+
+\textbf{Def of Isomorphism $(G\cong H)$}: If map $\phi:G\to H$ is homomorphism and bijective, then it's Isomorphism. \ \ $\phi^{-1}$ also.
+
+\textbf{Proposition of Isomorphism}: Automorphism: $\phi:G\to G,G\cong G$
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item Every Cyclic group of order n $(C_n)$ is isomorphism. \ \ \ \ \ \ \ \ \ \ \ $C_n \cong (\mathbb{Z}_n,+)$ \ \ \ \ \ \ \ \ \ \ \ $(\mathbb{R},+)\cong(\mathbb{R^*},\ \cdot \ )$
+    \item If $G\cong H$, G is abelian then H is abelian.
+    \item If $\phi:G\to H,\phi \ Homomorphism$,then: \ \ \ $\phi(e_G)=e_H$ \ \ \ $\phi(g^{-1})=(\phi(g))^{-1}$ \ \ \ If $\phi:1-1$, then: $o(g)=o(\phi(g))$
+\end{enumerate}
+
+\textbf{Def of Ker/Im}: Let $\phi:G\to$ H be homomorphism. \ \ \ $Im \phi := \{h\in H | h=\phi(g),g\in G\}$ \ \ \ $Ker \phi:= \{g\in G,\phi(g)=e_H\}$
+
+$\cdot$ $Ker\phi, \ Im\phi$ are both subgroup of G and H
+
+\textbf{Def of Normal $(H\lhd G)$}: A subgroup H of G is normal iff $\forall g\in G,gH=Hg$.
+
+\begin{minipage}[t]{0.67\linewidth}
+
+\textbf{Proposition of Ker/Im/Normal}: Let $\phi:G\to H$ be a group homomorphism.
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item $Ker\phi\lhd G$
+    \item $\phi$ is 1-1 iff $Ker\phi=\{e_G\}$ \ \ \ \ \ \ \ If $\phi$ is 1-1, then $G\cong Im\phi$
+\end{enumerate}
+
+\textbf{Theorem}:Let $H,K$ be subgroups of G and $H\cap K=\{e\}$ \ \ \ \ \ \ Then $|HK|=|H||K|$
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item Map $\phi:H\times K\to HK$ given by $\phi:(h,k)\to hk$ is bijective.
+    \item If $hk=kh$, then $HK\cong H\times K$, and HK is subgroup of G.
+\end{enumerate}
+
+\end{minipage}
+\begin{minipage}[t]{0.33\linewidth}
+
+\vspace{-2cm}
+\begin{longtable}{c|c|c}
+    {\footnotesize Transitive} & {\footnotesize Faithful} & {\footnotesize Example} \\
+    \hline
+    \hline
+    T & T & {\footnotesize $S_2$ act on $\{1,2\}$} \\
+    \hline
+    T & F & \makecell{\footnotesize $S_2$ act on \{e\} \\ \footnotesize by $g\cdot x=e,\forall g$} \\
+    \hline
+    F & T & \makecell{\footnotesize $G=Sym(·-·-·)$ \\ \footnotesize $X=\{1,2,3\}$} \\
+    \hline
+    F & F & \makecell{\footnotesize $S_2$ act on \{1,2\} \\ \footnotesize by Trivial Action} \\
+\end{longtable}
+
+\end{minipage}
+
+\subsection{Group Action, Orbits, Stabilizers and its Theorem}
+
+\textbf{Def of Action}: If $G$ is group, X is nonempty set. A (left) action of G on X is:
+
+$\cdot$ A map: $G\times X\to X$, written $(g,x)\to g\cdot x$ s.t. $g_1\cdot(g_2\cdot x)=(g_1g_2)\cdot x$ and $e\cdot x=x$
+
+$\cdot$ ps: Trivial action: (action map:)$g\cdot x=x$ for $\forall g\in G$
+
+\textbf{Action of Group itself}: 1.Left Action$:=g\cdot h=gh$ \ 2.Right Action$:=g\cdot h=hg^{-1}$ \ 3.Conjugate Action$:=g\cdot h=ghg^{-1}$
+
+\textbf{Stabilizer}: Let G act on X, then $Stab_G(x):=\{g\in G|g\cdot x= x\}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ps:It's always a subgroup of G.
+
+\textbf{Fix}: Let G act on X, then $Fix(g):=\{x\in X,g\cdot x=x\}$
+
+\textbf{Kernel of Action($N\lhd G$)}: $N:=\{g\in G|\forall \ x,g\cdot x=x\}=\cap_{x\in X} Stab_G(x)$
+
+\textbf{Def of Faithful and Trivial}: If Kernel = $\{e\}$ the action is faithful. \ \ \ \ \ \ \ If $f(x)=e$ for all $x\in X$, then it is trivial. $\downarrow$
+
+\textbf{Orbit of Action}: Let G act on X, then $Orb_G(x):=\{g\cdot x|g\in G\}$ || {\footnotesize $\cdot$ The only member of G that fixes everything in X is identity}.
+
+\textbf{Def of Transitive}: G act on X is Transitive if $\forall x,y\in X$, $\exists g\in G$ s.t. $y=g\cdot x$. (X is a single orbit under G)
+
+\textbf{Theorem}: Let G act on X, then $x\sim y\Leftrightarrow y=g\cdot x$ for some $g\in G$ def a equivalence relation on X.
+
+$\cdot$ The equivalence classes are the orbits of G. (即可以得到orbits 可以将X partition)
+
+\textbf{Send Notation}: Let G act on X, $x,y\in X$, then $Send_x(y)=\{g\in G|g\cdot x=y\}\subseteq G$
+
+$\cdot$ Let G act on X,$x,y\in X$.If $\exists g\in G$ s.t. $y=g\cdot x$ (e.i. x,y are in the same orbit) then $send_x(y)=g Stab_G(x)$
+
+$\cdot$ 即：所有让x回到x的action$\in G$ 左乘一个让x到y的action$\in G$ 可以使全部g$\cdot$action都为x到y的action
+
+\textbf{Theorem}: $\phi:Orb_G(x)\to G/H,H=Stab_G(x)$ is bijection.
+
+\textbf{Orbit-Stabilizer Theorem}: Let G act on X, then $|Orb_G(x)|\times|Stab_G(x)|=|G|$
+
+\textbf{Cauchy's Theorem}: Let G be a group, p prime. If $p \ | \ |G|$ then G contains an element of order p.
+
+\subsection{Counting, Conjugacy and Class Equation}
+
+\textbf{P$\mathbf{\acute{o}}$lya Counting}: \# orbits of G in X = $\frac{1}{|G|}\sum\limits_{g\in G}|Fix(g)|$
+
+$\cdot$ \textbf{Coloring Problem}: Let $G$ act on $X$, $X=\{$All coloring vertiex$\}$. Then we have: \# coloring = \# orbits of G act on X.
+
+\textbf{Conjugation Action}: Let G act on itself Then $:=g\cdot h=ghg^{-1}$ \ \ \ \ \ The \textbf{orbits} are called the \textbf{Conjugacy Classes} of G.
+
+\textbf{Conjugacy Classes}: Let G act on itself then $Conj(g):=\{h \cdot g | h\in G\}=\{hgh^{-1}| h\in G\}$
+
+\textbf{Conjugate}: If $g,g'\in G$, there exists $h\in G$ s.t. $g'=hgh^{-1}$. We say that $g,g'$ conjugate. (即在同一个class/orbit)
+
+$\cdot$ ps: when G is abelian, each element is its own conjugacy class.
+
+$\cdot$ $\{e\}$ is always a conjugacy class.
+
+$\cdot$ \textbf{Heuristic (Hint)}: 如果两个操作在几何上是对称的，那么这两个操作conjugate.
+
+\textbf{Centralizer}: $C(g):=Stab_G(g)=\{h\in G|h\cdot g=g\}=\{h\in G | gh=hg\}\subseteq G$ , under conjugacy action.
+
+\textbf{Important}: $Conj(g)=Orb_G(g)$ , $|C(g)|=|Stab_G(G)|$ under conjugacy action.
+
+\textbf{Center}: $C(G):=\{g\in G | gh=hg,for \ all \ h\in G\}=\cap_{g\in G}C(g)$ \ \ \ \ \ \ (即conjugacy action下的kernel)
+
+$\cdot$ G is \textit{abelian} iff $C(G)=G$
+
+\textbf{Corollary}: $C(g),C(G)$ are subgroups of G.
+
+\textbf{Corollary}: $\{g\}$ is a conjugacy class iff $g\in C(G)$. \ \ \ \ Hence \textbf{$\mathbf{C(G)}$ is the union of all 1-element conjugacy class.}
+
+\textbf{Theorem}: Let G be a finite group with conjucacy classes: $Conj_1,Conj_2,...,Conj_n$, Let $Conj_1=\{e\}$
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item If $g\in Conj_k$ then $|Conj_k||C(g)|=|G|$
+    \item \textbf{Class Equation}: $|G|=|Conj_1|+|Conj_2|+\cdots+|Conj_n|$ \ \ \ \ \ \ ps:因为G也是set X, orbit 将 X partition.
+\end{enumerate}
+
+\textbf{Theorem}: If G is a group
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item If $|G|=p^k$, p is prime, then $|C(G)|\geq p$ \ \ \ \ \ \ 即G里面至少有p个元素可以和所有元素有交换律.
+    \item Every group of order $p^2$,(p prime) is abelian.
+\end{enumerate}
+
+\subsection{Cayley's Theorem}
+
+\textbf{Conjugation Action Express in Cycle Notation}: Let $\tau\in S_n,\sigma\in S_n,\sigma=(a_1\cdots a_n)(b_1\cdots b_n)\cdots$. disjoint
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Then: $\tau\sigma\tau^{-1}=(\tau(a_1)\cdots \tau(a_n))(\tau(b_1)\cdots \tau(b_n))\cdots$
+
+\textbf{Theorem}: Two permutations $\in S_n$ are conjugate iff have the same cycle-shape.
+
+\textbf{Theorem}: The If $\sigma\in S_n$ have cycle-shape: $(1^{a_1},2^{a_2},...,n^{a_n})$ then \# of $\sigma$ = $\frac{n!}{a_1!a_2!\cdots a_n!\cdot 1^{a_1}2^{a_2}\cdots n^{a_n}}$
+
+\textbf{Def of Bij(X)}: $Bij(X):=\{bijections \ X\to X\}=S_{|X|}$
+
+\textbf{Lemma}: If $G$ act on $X$, then $\forall g\in G,f_g:X\to X$ defined $x\to g\cdot x$ is bijection.
+
+$\cdot$ ps: 即每一个permutation可以定义是G(Group)中的一个g对所有X中全部元素action所形成的permutation.
+
+\textbf{Theorem}: If $G$ is group act on X, and $\phi:G\to S_{|X|}=Bij(X)$
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item Action of G on X $\Leftrightarrow$ A group homomorphism $\phi$
+    \\ ps: Lemma + 是同态
+    \item Action is faithful $(Kernel=\cap Stab=\{e\})$ iff $\phi$ is injective.
+    \\ ps: 在这里的 $\phi$ 时, $Ker(\phi)=\{e\}\Leftrightarrow$ Kernel of action $=\{e\}$ \ \ \ \ \ \ \ \ (3.4 proposition of Ker 的推广). 
+    \item Action is faithful $\Rightarrow$ $G\cong Im(\phi) \ (\phi \ isomorphism)$ \ \ \ \ ps: $Im(\phi)\leq Bij(X)$
+    \\ ps: (3.4 proposition of Ker 的推广). 
+\end{enumerate}
+
+\textbf{Cayley's Theorem}: Every finite group is isomorphic to a subgroup of a symmetric group.
+
+\subsection{Alternating Group, Platonic Solids}
+
+\textbf{Recall Permutation}: $P=\prod\limits_{1\leq i< j\leq n}(x_i-x_j)$, Let $X=\{P,-P\}$. \ \ \ Then, $S_n$ acts on X by $\sigma\cdot P=\prod\limits_{1\leq i< j\leq n}(x_{\sigma(i)}-x_{\sigma(j)})$
+
+$\cdot$ Odd when length of $\sigma$ is even; Even when length of $\sigma$ is odd;
+
+\textbf{Alternating Group}: $A_n:=$ All even permutations of $S_n$. \ \ \ \ \ \ $|A_n|=\frac{|S_n|}{2}=\frac{n!}{2}$
+
+\textbf{Dual}: 对偶图像 $sym(\Gamma)$ 相同 \ \ \ \ \ \ \ \ \ \ \ \ \ \ 正十二面体(Dodecahedron)与正二十面体(Icosahedron)对偶
+
+正四面体(Tetrahedron)自己对偶 \ \ \ \ \ 正八面形(Octahedron)与正六面体(Cube)对偶.
+
+\subsection{Groups of Small Order}
+
+\begin{table}[htbp]
+    \vspace{-0.35cm}
+    \hspace{0.4cm}
+    \begin{tabular}{c||c|c|c|c|c|c|c}
+        |G|     & 1       & 2              & 3              & 4                                             & 5              & 6                                                 & 7              \\
+        \hline
+        $\cong$ & $\{0\}$ & $\mathbb{Z}_2$ & $\mathbb{Z}_3$ & $\mathbb{Z}_4,\mathbb{Z}_2\times\mathbb{Z}_2$ & $\mathbb{Z}_5$ & $\mathbb{Z}_6,\mathbb{Z}_2\times\mathbb{Z}_3,D_3$ & $\mathbb{Z}_7$ \\
+    \end{tabular}
+    \vspace{-0.35cm}
+\end{table}
+
+\subsection{Useful Graphs}
+
+\vspace{-0.5cm}
+$$\includegraphics[width=5.3in]{graphs}$$
+\vspace{-2cm}
+
+\end{document}

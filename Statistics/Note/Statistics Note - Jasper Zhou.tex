@@ -1,0 +1,699 @@
+\documentclass[9pt]{article}
+
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{ctex}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{makecell} % 换行
+
+% 使用分栏宏包
+\usepackage{multicol} 
+\setlength{\columnseprule}{0.4pt} % 分割线
+
+% 设置字体
+\usepackage{unicode-math}
+\setmainfont{Cambria}
+\setmathfont{Cambria Math}
+
+% 调整页面布局
+\usepackage[a4paper, top=0.7cm, bottom=1cm, left=0.7cm, right=.7cm]{geometry}
+\setlength{\footskip}{15pt}
+
+% 设置页脚/页眉
+\usepackage{fancyhdr}
+\fancyfoot[C]{Copyright By Jingren Zhou and Qikang Fan | Page \thepage}
+\fancyhead[]{}
+\pagestyle{fancy}
+% 去除线
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% 设置 section/subsection 之间的行间距
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+
+% 调整标题上下间距
+\usepackage{titling}
+\setlength{\droptitle}{-2.4cm} % 负值表示向上移动
+
+% 设置标题，作者，时间
+\title{Statistics Note}
+\author{}
+\date{}
+
+% 正文
+\begin{document}
+
+
+% 标题
+\maketitle
+\thispagestyle{fancy}
+\vspace{-3.5cm}
+
+% 字体大小
+\fontsize{10pt}{11pt}\selectfont
+\setlength{\parindent}{8pt}
+
+\section{Basic Knowledge} % Basic Knowledge
+
+\textbf{Probability Axioms}: \textbf{1.} $\forall E\subseteq\Omega,\mathbb{P}(E)\geq 0.$ \ \ \ \ \textbf{2.} $\mathbb{P}(\Omega)=1$ \ \ \ \ \textbf{3.} $\forall E_1,E_2\subseteq\Omega,E_1\cap E_2 =\emptyset, \ \ \mathbb{P}(E_1\cup E_2)=\mathbb{P}(E_1) + \mathbb{P}(E_2)$
+
+\textbf{Marginal PDF}: $f_X(x)=\int^\infty_{-\infty}f_{X,Y}(x,y)dy=\sum_yf_{X,Y}(x,y)$
+
+\textbf{Conditional PDF}: $f_{X|Y}(x|y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}$
+
+\textbf{I.I.D. \ }: Independent and identically distribution. \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ps: If $\mathbf{X}=(X_1,X_2,...,X_n) \ i.i.d. \ \ f_X(x)=\prod_{i=1}^{n}f_{X_i}(x_i)$
+
+\textbf{Expected/Mean $(\mathbb{E})$}: $\mathbb{E}(aX\pm bY\pm c)=a\mathbb{E}(X)\pm b\mathbb{E}(Y)\pm c$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ If Independent: $\mathbb{E}(XY)=\mathbb{E}(X)\mathbb{E}(Y)$
+
+\textbf{Variance $(Var)$}: $Var[aX\pm bY\pm c]=a^2Var[X]+b^2Var[Y]\pm 2ab\cdot Cov(X,Y)$ \ \ \ \ \ \ \ \ \ \ \ If Independent: $Cov(X,Y)=0$
+
+$\cdot$ Other way to calculate variance: $Var[X]=\mathbb{E}[(X-\mathbb{E}(X))^2]=\mathbb{E}(X^2)-[\mathbb{E}(X)]^2$ \ \ \ \ \ \ \ $Std(X)=\sqrt{Var(X)}$
+
+\textbf{Independent}: If $f_{X,Y}(x,y)=f_X(x)f_Y(y)$
+
+\textbf{Covariance and Correlation}:
+\begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+    \item $Cov(X,Y)=\mathbb{E}[(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])]=\mathbb{E}[XY]-\mathbb{E}[X]\mathbb{E}[Y]=\sigma_X\sigma_YR_{XY}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $Cor(X,Y)=\frac{Cov(X,Y)}{\sqrt{Var(X)Var(Y)}}\in[-1,1]$
+    \item $Cov(X,X)=Var(X)$ \ \ \ \  \ \ \ $Cov(aX\pm b,cY\pm d)=ac\cdot Cov(X,Y)$
+\end{enumerate}
+
+\textbf{Central Limit Theorem (CLT)}: If $X_1,X_2,...,X_n$ are i.i.d. :
+
+$\cdot$ \ \ $\sum X_i \stackrel{apx.}{\sim}N(n\mu,n\sigma^2)$ \ \ \ \ \ \ \ $\frac{1}{n}\sum X_i \stackrel{apx.}{\sim}N(\mu,\frac{\sigma^2}{n})$ \ \ \ \ \ \ \ ps:$z=\frac{X-\mu}{\sigma^2}$
+
+\section{Estimation} % Estimation
+\subsection{Population, Sample and Estimator}
+
+\textbf{Some Def}: \textbf{Population} 总体 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{Sample} 样本 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{RVs $(X_1,X_2,...,X_n)$} 随机变量 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{Census} 普查
+
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{Parameter $(\theta)$}: 总体已知或未知的参数 \ \ \ \ \ \ \ \ \ \ \ \textbf{Representative}: 总体中每一个元素都有同等概率选中
+
+\textbf{Estimator $(T_n)$}: It's a function of Some RVs, used to estimate a Parameter. \ \ \ \ \ \ \ ps:Value called by the estimate.
+
+\textbf{Unbiased}: If $\mathbb{E}(T_n)=\theta$ then we say that Estimator $T_n$ is unbiased for $\theta$. \ \ \ \ \ \ ps: Asymptotically unbiased:$\lim\mathbb{E}[T_n]=\theta$
+
+\textbf{Consistent}: If $\lim\mathbb{E}(T_n)=\theta$ and $\lim Var(T_n)=0.$ We say that the estiamtor $T_n$ is consistent.
+
+$\cdot$ \textbf{1.} Unbiased better than Biased. \ \ \ \ \ \ \  \ \textbf{2.} 方差减少的快的比减少的慢的好.
+
+\subsection{Common Estimators}
+
+\vspace{-0.4cm}
+\begin{longtable}{|c|c|c|c|c|c|}
+    \hline
+    \textbf{Sample Mean}          & \textbf{Sample Var}                     & S.D.           & Cov(X,Y)                                              & Cor(X,Y)                       & $\mathbb{P}(X\leq k)$                        \\
+    \hline
+    \hline
+    $\bar{X}=\frac{1}{n}\sum X_i$ & $S^2=\frac{1}{n-1}\sum (X_i-\bar{X})^2$ & $S=\sqrt{S^2}$ & $S_{xy}=\frac{1}{n-1}\sum (x_i-\bar{X})(Y_i-\bar{Y})$ & $R_{xy}=\frac{S_{xy}}{S_xS_y}$ & $P=\frac{1}{n}\sum \mathbb{1}_{[X_i\leq k]}$ \\
+    \hline
+    $\mu$ 无偏，一致                   & $\sigma^2$ 无偏，一致                        & $\sigma$ 一致    & $\sigma_{xy}$ 无偏，一致                                   & $\rho$ 一致                      & $\pi \ (p) $ 无偏，一致                           \\
+    \hline
+\end{longtable}
+\vspace{-0.4cm}
+
+\textbf{Useful Formula}: $Var[\bar{X}]=\sigma^2/n$ \ \ \ \ \ \ \ \ \ $S^2=\frac{1}{n-1}(\sum X^2_i -n\bar{X}^2)$
+
+\textbf{S.E. }: $S.E.(\bar{X})=\sqrt{Var[\bar{X}]}=\sqrt{\sigma^2/n}$ \ \ \ \ \ \ \ \ $\widehat{S.E.}(\bar{X})=\sqrt{S^2/n}$
+
+\subsection{Method of Moments and Maximum Likelihood Estimate}
+
+\textbf{Population Moments}: $\mu_k=\mathbb{E}[X^k]=\sum_x x^kf_X(x|\theta)=\int_{\mathbb{R}}x^kf_X(x|\theta)dx$
+
+\textbf{Sample Moments}: $\overline{X^k}=\frac{1}{n}\sum X^k_i$
+
+\textbf{Method of Moments}: If $\theta=f(\mu_1,\mu_2,...,\mu_n)$. Then $\hat{\theta}=f(\overline{X},\overline{X^2},...,\overline{X^n})$ \ \ \ \ \ \ \ \ \ ps: Always Consistent.
+
+\textbf{(Log-)Likelihood Function}: $L(\theta|\mathbf{x})=\prod f(x_i;\theta)$ \ \ \ \ $\ell(\theta|\mathbf{x})=ln[L(\theta|\mathbf{x})]$
+
+\textbf{Maximum likelihood Estimate (MLE)}: $\hat{\theta}=ArgMax[L(\theta|\mathbf{x})]=ArgMax[\ell(\theta|\mathbf{x})]$ \ \ \ \ \ \ \ \ \ \ ps: Always Consistent.
+
+$\cdot$ Condition: $x_i$ need i.i.d. \ \ \ \ \ ArgMax 有条件约束最大值 \ \ \ \ \ \ \ \ 通过求导=0得到$\hat{\theta}$ (不是必须,e.g.$X\sim U(a,b)$)
+
+\subsection{Confidence Interval}
+
+\textbf{Def of Confidence Interval}: $100(1-\alpha)\%$ Confidence Interval for $\theta$ is $[l(X),u(X)]$, $\mathbb{P}(l(X)<\theta<u(X))=1-\alpha.$
+
+$\cdot$ Interval 越小代表uncertainty越低. \ \ \ \ \ \ $\uparrow\%$,wider CI \ \ \ \ \ \ \ \ CI 越小越好 \ \ \ \ \ \ \ \ \  {\footnotesize ps:我们只考虑 (The central confidence interval) 枢轴变量.}
+
+\vspace{-0.4cm}
+\begin{longtable}{|c||c|c|}
+    \hline
+    How to choose   & Known $(\sigma/\mu)$                                                                                                                                                                                                                                                            & Unknown $(\sigma/\mu)$                                                                                                                                                                                                                         \\
+    \hline
+    Find $\mu$      & \begin{tabular}{@{}p{7.5cm}@{}}By CLT $\frac{\overline{X}-\mu}{\sqrt{\sigma^2/n}}\sim N(0,1)$ \ \ \ \ {\fontsize{8}{12}\selectfont n很大时，$\sigma^2=S^2$} \\ CI: $(\bar{X}-z_{\alpha/2}\frac{\sigma}{\sqrt{n}},\bar{X}+z_{\alpha/2}\frac{\sigma}{\sqrt{n}})$\end{tabular} & \begin{tabular}{@{}p{7.5cm}@{}} $\frac{\overline{X}-\mu}{\sqrt{S^2/n}}\sim t_{n-1}$ \\ CI: $(\bar{X}-t_{n-1;\alpha/2}\frac{S}{\sqrt{n}},\bar{X}+t_{n-1;\alpha/2}\frac{S}{\sqrt{n}})$\end{tabular} \\
+    \hline
+    Find $\sigma^2$ & \begin{tabular}{@{}p{7.5cm}@{}} $\frac{1}{\sigma^2}\sum(X_i-\mu)^2\sim \chi^2_n$ \\ CI: $(\frac{\sum(X_i-\mu)^2}{\chi^2_{n;\alpha/2}},\frac{\sum(X_i-\mu)^2}{\chi^2_{n;1-\alpha/2}})$\end{tabular}                                               & \begin{tabular}{@{}p{7.5cm}@{}} $\frac{(n-1)S^2}{\sigma^2}\sim \chi^2_{n-1}$ \\ CI: $(\frac{(n-1)S^2}{\chi^2_{n-1;\alpha/2}},\frac{(n-1)S^2}{\chi^2_{n-1;1-\alpha/2}})$\end{tabular}                                                              \\
+    \hline
+\end{longtable}
+\vspace{-0.4cm}
+
+$\cdot$ We need $X_1,X_2,...,X_n\sim N(\mu,\sigma^2)$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ps:$z_p:=\mathbb{P}(Z\geq z_p)=p$
+
+\section{Hypothesis Testing} % Hypothesis Testing
+\subsection{Null, Alternative Testing, Power, P-value and Significance Level}
+
+\textbf{Null Hypothesis $(H_0)$}: Claim about some propert of the population. e.g. $(H_0=\theta)$
+
+\textbf{Alternative Hypothesis $(H_1)$}: an assertion about how population differ to contradict $H_0$. (Two or One Side)
+
+\vspace{-0.4cm}
+\begin{multicols}{2}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Type & Type I error                         & Type II error                               \\
+        \hline
+        Def  & $\mathbb{P}(Rej \ H_0|H_0 \ is \ T)$ & $\mathbb{P}(Fail \ Rej \ H_0|H_0 \ is \ F)$ \\
+        \hline
+    \end{tabular}
+
+    \textbf{Significance Level}: $\alpha = \mathbb{P}(Rej \ H_0|H_0 \ is \ T)$
+
+    \columnbreak
+
+    \begin{tabular}{|c|c|c|}
+        \hline
+        -                 & $H_0$ is T                                 & $H_0$ is F                                \\
+        \hline
+        Fail to Rej $H_0$ & Right                                      & {\footnotesize Type II ($\beta$) 与size有关} \\
+        \hline
+        Rej $H_0$         & {\footnotesize Type I ($\alpha $) 与size无关} & Right (Power)                             \\
+        \hline
+    \end{tabular}
+
+\end{multicols}
+\vspace{-0.4cm}
+
+\textbf{Power of Test}: $\mathbb{P}$(Rej $H_0$|$H_0$ is F)$=1-\beta=\mathbb{P}(Z\in C|\mu=\mu^*)$
+
+$\cdot$ 1.Sample size $\uparrow$, Power $\uparrow$; \ \ \ \ \ \ \ \ \ 2.$\sigma^2$ $\downarrow$, Power $\uparrow$; \ \ \ \ \ \ \ \ \ 3.Effect size $|\theta_0-\theta^*|$ $\uparrow$, Power $\uparrow$; \ \ \ \ \ \ \ \ \ 4.$\alpha$$\uparrow$, Power $\uparrow$.
+
+    \textbf{P-value}: 1.One-side: $p=\mathbb{P}(T\geq t;T\sim H_0)$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2.Two-sides: $p=2\min\{\mathbb{P}(T\geq t;T\sim H_0),\mathbb{P}(T\leq t;T\sim H_0)\}$
+
+    \subsection{Test Statistics and Decision Rule}
+
+    \vspace{-0.4cm}
+    \begin{longtable}{|c|c|c|c|c|}
+        \hline
+        \multicolumn{2}{|c|}{One Sample} & \multicolumn{3}{c|}{Two Sample}                   \\
+        \hline
+        \multicolumn{2}{|c|}{Find $\mu$} & \multicolumn{2}{c|}{Find $\mu$} & Find $\sigma^2$ \\
+        \hline
+        \makecell{Z-Test ($\sigma^2$ known)                                                  \\ $Z=\frac{\bar{X}-\mu_0}{\sqrt{\sigma^2/n}}\sim N(0,1)$} & \makecell{t-Test ($\sigma^2$ unknown) \\ $T=\frac{\bar{X}-\mu_0}{\sqrt{S^2/n}}\sim t_{n-1}$} & \makecell{Paired t-Test (X,Y same Unit) \\ $D_i=Y_i-X_i\sim N(\mu_D,\sigma^2_D)$ \\ $T=\frac{\bar{D}-\mu_D}{\sqrt{S^2/n}}\sim t_{n-1}$} & \makecell{Two-Sample t-Test (独立) \\ $T=\frac{(\bar{X}-\bar{Y})-\Delta_0}{\sqrt{\sigma^2(\frac{1}{m}+\frac{1}{n})}}\sim N(0,1)$ \\ {\fontsize{10}{12}\selectfont 未知:}$S^2_p$;$T\sim t_{m+n-2}$} & \makecell{F-Test \\ $F=\frac{S^2_X}{S^2_Y}$ \\ $\sim F_{m-1,n-1}$} \\
+        \hline
+    \end{longtable}
+    \vspace{-0.4cm}
+
+$\cdot$ 对于Two-Sample t-Test 我们要求X,Y $\sigma^2$ 一致 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  ps:$H_0:\mu_D=\mu_X-\mu_Y$ ; \ \ \ \ \ \  $H_0:\Delta_0=\mu_x-\mu_Y$ ; \ \ \ \ \ \ $X:m,Y:n$
+
+    \textbf{Pooled Sample Variance}: (Two sample Variance) $S^2_p=\frac{(m-1)S^2_X+(n-1)S^2_Y}{m+n-2}$ \ \ \ \ \ ps:Unbiased
+
+    \subsection{Conclusion and Assessing Normality}
+
+    \textbf{Conclusion}:
+    \begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+        \item Rejecting $H_0$ in favour of $H_1$. (If it is in Critical Region C).
+        \item Failing to reject the $H_0$. (If it is not in Critical Region C)
+    \end{enumerate}
+
+    \textbf{The Expirical Cumulative Distribution Function}: Let $x_1\leq x_2\leq \cdots\leq x_n$ be observed sample.
+
+$\cdot$ ECDF:$\hat{F}_X(x)=\frac{1}{n}\sum_{i=1}^{n}\mathbb{1}_{[x_i<x]}$ \ \ \ \ \ ps:Unbiased for $F(x)$ CDF.
+
+    \textbf{QQ-Plot}: $(z_i,x_i)$ where $z_i=\Phi^{-1}(\frac{i-0.5}{n})$ \ \ \ \ \ \ \ \ \ {\small 如果中心点是(0,0) 为 standard normal 否则为 non-standard normal}
+
+$\cdot$ ps:如果是正态分布，图像大致沿一条直线分布，两端相对平滑。(两端同时轻微向上或向下也算)
+
+$\cdot$ ps:negative skew：两端都在线下，反之positive skew; light tails:两端取向横向零，否则heavy tails.
+
+    \section{Linear Regression} % Linear Regression
+
+    \subsection{Simple Linear Regression Model}
+
+    \textbf{Method of Least-Squares}: Consider the model $\mathbb{E}[Y]=\alpha +\beta x$ or model $Y_i=\alpha + \beta x_i + \epsilon_i$ where $\mathbb{E}[\epsilon_i]=0,Var[\epsilon_i]=\sigma^2$.
+
+    \vspace{-0.3cm}
+    \begin{longtable}{|c|c|c|}
+        \hline
+        -        & Estimator (Unbiased)                                                                                                                                                                                                & Var / S.E. \ \ \ \ For $\widehat{Var}$, $S_e^2=\sigma^2$                                      \\
+        \hline
+        $\alpha$ & $\hat{\alpha}=\bar{Y}-\hat{\beta}\bar{x}$                                                                                                                                                                           & $Var[\hat{\alpha}]=\sigma^2(\frac{1}{n}+\frac{\bar{x}^2}{(n-1)S^2_x})$ \ (Unbiased)           \\
+        \hline
+        $\beta$  & \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  $\hat{\beta}=\frac{\sum(x_i-\overline{x})(Y_i-\overline{Y})}{\sum(x_i-\overline{x})^2}=\frac{S_{xy}}{S_x^2}=r_{x,y}\cdot\frac{S_y}{S_x}$  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \                & $Var[\hat{\beta}]=\frac{\sigma^2}{(n-1)S^2_x}$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (Unbiased) \\
+        \hline
+        Other    & \multicolumn{2}{c|}{$r_{x,y}=\frac{S_{xy}}{S_xS_y}$ \ \ \ \ \textbf{Fitted regression line}:$\hat{y_i}=\hat{\alpha} + \hat{\beta}x_i$ \ \ \ \ \textbf{Residuals}:$e_i=y_i-\hat{y_i}$ \ \ \ \ ps:Var / S.E. are Unbiased.}                                                                                                 \\
+        \hline
+        Other    & \multicolumn{2}{c|}{\textbf{Residual Sum of Squares (Q($\alpha,\beta$))}: $\sum(Y_i-\hat{Y_i})^2$ \ \ \ \ \textbf{Residual Variance}: $S^2_e=\frac{1}{n-2}\sum(y_i-\hat{y_i})^2$ (Unbiased for $\sigma^2$)}                                                                                                         \\
+        \hline
+        Other    & \multicolumn{1}{l|}{\ \ \ \ \ Another formula for $S^2_e=\frac{n-1}{n-2}(S^2_y-\hat{\beta}^2S^2_x)$}                                                                                                                & \multicolumn{1}{l|}{In R studio: $H_0:\alpha,\beta=0$}                                        \\
+        \hline
+    \end{longtable}
+    \vspace{-0.4cm}
+
+    \subsection{Normal Linear Regression Model}
+
+    \vspace{-0.4cm}
+    \begin{longtable}{|c|c|c|c|}
+        \hline
+        -        & Distribution                                                                    & Marginal Distribution                                                                            & Confidence Interval                                                                      \\
+        \hline
+        $\alpha$ & $\hat{\alpha}\sim N(\alpha,\sigma^2[\frac{1}{n}+\frac{\bar{x}^2}{(n-1)S^2_x}])$ & $\frac{\hat{\alpha}-\alpha}{\sqrt{S^2_e(\frac{1}{n}+\frac{\bar{x}^2}{(n-1)S^2_x})}}\sim t_{n-2}$ & $\hat{\alpha}\pm t_{n-2;\alpha/2}\sqrt{S^2_e(\frac{1}{n}+\frac{\bar{x}^2}{(n-1)s^2_x})}$ \\
+        \hline
+        $\beta$  & $\hat{\beta}\sim N(\beta,\frac{\sigma^2}{(n-1)S^2_x})$                          & $\frac{\hat{\beta}-\beta}{\sqrt{\frac{S^2_e}{(n-1)S^2_x}}}\sim t_{n-2}$                          & $\hat{\beta}\pm t_{n-2;\alpha/2}\sqrt{\frac{S^2_e}{(n-1)S^2_x}}$                         \\
+        \hline
+    \end{longtable}
+    \vspace{-0.4cm}
+
+$\cdot$ ps:$\frac{(n-2)S^2_e}{\sigma^2}\sim\chi^2_{n-2}$ \ \ \ \ \ We assume that $Y_i \stackrel{indep.}{\sim} N(\alpha +\beta x_i,\sigma^2)$ \ \ \ or \ \ \ $Y_i = \alpha + \beta x_i + \epsilon_i,\epsilon\stackrel{i.i.d.}{\sim}N(0,\sigma^2)$:
+
+{\footnotesize Caution(We don't use): Some author use $S_{xx}=\sum_{i=1}^{n}(x_i-\bar{x})^2,and \ S_{xy}=\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})$ and $\hat{\beta}=\frac{S_{xy}}{S_{xx}}$}
+
+    \textbf{Theorem}: The MLE for $\alpha,\beta$ = Least-Squares, If $Y_i \stackrel{indep.}{\sim} N(\alpha +\beta x_i,\sigma^2)$ or $Y_i = \alpha + \beta x_i + \epsilon_i,\epsilon\stackrel{i.i.d.}{\sim}N(0,\sigma^2)$
+
+$\cdot$ By using MLE, $\widehat{\sigma^2}=\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{\alpha}-\hat{\beta}x_i)^2=\frac{n-2}{n}S^2_e (Biased)$ \ \ \ \ \ \
+
+    \subsection{Confidence Interval for $\mathbb{E}[Y_0]$ and Prediction for $Y_0$}
+
+    \textbf{Confidence Interval for $\mathbb{E}[Y_0]$}: Regression Equ $\mathbb{E}[Y_0]=\alpha+\beta x_0$, $\mathbb{E}[Y_0]$ is fixed but unknown.
+
+$\cdot$ \textbf{CI}: $\hat{\alpha}+\hat{\beta}x_0\pm t_{n-2;\alpha/2}\sqrt{S^2_e(\frac{1}{n}+\frac{(x_0-\bar{x})^2}{(n-1)S^2_x})}$  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ps: 对于群体. \ \ \ $Var[\hat{\mathbb{E}}(Y_0)]=\sigma^2[\frac{1}{n}+\frac{(x_0-\bar{x})^2}{(n-1)s^2_x}]$ \ \ \ \ \ \ \ \ \ \ \ \ $\frac{\hat{\mathbb{E}}[Y_0]-\mathbb{E}[Y_0]}{\sqrt{S_e^2(\frac{1}{n}+\frac{(x_0-\bar{x})^2}{(n-1)s^2_x})}}\sim t_{n-2}$
+
+    \textbf{Prediction Interval for $Y_0$}: Regression Equ $Y_0=\alpha+\beta x_0+\epsilon_0$, independent error $\epsilon_0\sim N(0,\sigma^2)$
+
+$\cdot$ \textbf{PI}: $\hat{\alpha}+\hat{\beta}x_0\pm t_{n-2;\alpha/2}\sqrt{S^2_e(1+\frac{1}{n}+\frac{(x_0-\bar{x})^2}{(n-1)S^2_x})}$ \ \ \ \ ps: 对于个体. \ \ \ $Var[\hat{Y}_0]=\sigma^2[1+\frac{1}{n}+\frac{(x_0-\bar{x})^2}{(n-1)s^2_x}]$
+
+    \textbf{Difference between them}: Consider fitted regression line $\hat{\alpha}+\hat{\beta}x_0$ then:
+    \begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+        \item $\hat{\mathbb{E}}[Y_0]$: The estimate of the regression line at new explantory value.
+        \item $\mathbb{E}[\hat{Y}_0]$: The expected value of some unobserved RVs.
+        \item PI interval > CI interval. (Uncertainty from single future observation.) \ \ \ \ \ ps: 离sample mean x越远，intervals $\uparrow$.
+    \end{enumerate}
+
+    \subsection{Check Assumptions}
+
+    \textbf{Assumption for Normal Linear Regression Model}:  $Y_i\stackrel{i.i.d.}{\sim}N(\alpha+\beta x_i,\sigma^2)$
+
+    \textbf{Decomposition of Variability}: $\sum^{n}_{i=1}(y_i-\bar{y})^2$ $_{(Total \ Varia)}$ = $\sum^{n}_{i=1}(y_i-\hat{y}_i)^2$ $_{(Unexplained \ Varia)}$ + $\sum^{n}_{i=1}(\hat{y}_i-\bar{y})^2$ $_{(Explained \ Varia)}$
+
+    \textbf{Def of R-Squared}: R-Squared statistic describes the proportion of variability explained by the fitted regresison line.
+
+    \textbf{Multiple R-Squared}: $R^2=\frac{\sum(\hat{y}_i-\bar{y})^2}{\sum(y_i-\bar{y})^2}=1-\frac{\sum(y_i-\hat{y}_i)^2}{\sum(y_i-\bar{y})^2}$ $\in [0,1]$ \ \ \ \ \ ps:R越大better predicts the data.
+
+$\cdot$ 代表：\textbf{1.} The linear model explains $\{R^2\}$ of the Variability within the $\{y\}$ data.
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{2.} $\{1-R\}$ of Variability of the $\{y\}$ data remains unexplained.
+
+$\cdot$ \textbf{格式}: As $R^2$ for the \{Model 1\} $\{?\%\}$ is larger (smaller) than \{Model 2\} $\{?\%\}$, so \{Model 1\} is preferred as it expains more of the response variability.
+
+    \textbf{Reliability of the prediction}: 计算$k=\frac{|x_0-\bar{x}|}{S_x}$ \ \ \ \ \ \ ps:一般来说小于1.96以上才说好的reliability.
+
+$\cdot$ Linear Regression 从$\bar{x}$ 往左右，reliable 逐渐下降.
+
+$\cdot$ \textbf{格式}：The value of the explantory variable is about \{k\} S.E. above (below) the sample mean $\bar{x}$. So point $x_0$ can (cannot) be considered to be within the reasonable range of the explantory variables and not (will) be considered as a point of extrapolation. So it's (not) reliable.
+
+    \textbf{Graphical Assessment}
+    \begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+        \item Residuals vs Fitted (Check linear assumption): $(\hat{y}_i,e_i)$ , $e_i=y_i-\hat{y}_i$ , $\hat{y}_i=\hat{\alpha}+\hat{\beta}x_i$ \ \ \ \ 在0附近，越靠0越好。
+              \\ ps: 点在整张图均匀分布$\to$constant variance \text{\footnotesize(the range of the scatter of points is consistent over the range of fitted values)}
+        \item Scale-Location (Check constant variance assumption): $(\hat{y}_i,\sqrt{|e^*_i|})$, $e^*_i=\frac{e_i}{s_e}$ \ \ \ \ \text{\footnotesize 越靠近0.82越好.(around a constant value)}
+        \item Normal QQ-Plot (Check Normal Assumption): $(z_i,e^*_i)$ , $z_i=\Phi^{-1}(\frac{i-0.5}{n})$ \ \ \ \ 判断方法具体见3.3
+    \end{enumerate}
+
+    \section{Multiple Regression and Analysis of Variance} % Multiple Regression and Analysis of Variance
+
+    \subsection{Extending Least-Squares Estimation}
+
+    \vspace{-0.4cm}
+    \begin{multicols}{2}
+
+        \begin{center}
+            \small \textbf{Definitions}
+        \end{center}
+        \vspace{-0.2cm}
+
+        $Y_i \stackrel{i.i.d.}{\sim}N(\beta_1x_{i,1}+\beta_2x_{i,2}+\cdots+\beta_px_{i,p},\sigma^2)$ for $i=1,...,n$
+
+        \vspace{-0.9cm}
+        \begin{center}
+            \[
+                For:
+                \begin{pmatrix}
+                    Y_1    \\
+                    Y_2    \\
+                    \vdots \\
+                    Y_n    \\
+                \end{pmatrix}
+                =
+                \begin{pmatrix}
+                    x_{1,1} & \cdots & x_{1,p} \\
+                    x_{2,1} & \cdots & x_{2,p} \\
+                    \vdots  & \ddots & \vdots  \\
+                    x_{n,1} & \cdots & x_{n,p} \\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \beta_1 \\
+                    \beta_2 \\
+                    \vdots  \\
+                    \beta_n \\
+                \end{pmatrix}
+                +
+                \begin{pmatrix}
+                    \epsilon_1 \\
+                    \epsilon_2 \\
+                    \vdots     \\
+                    \epsilon_n \\
+                \end{pmatrix}
+            \]
+        \end{center}
+        \vspace{-0.1cm}
+
+        \begin{flushleft}
+            \ \ \ \ \ \ \ \ \ \ we write as: $\underline{Y}=\textbf{\textit{X}}\underline{\beta}+\underline{\epsilon}$ \ \ \ \ \ \ \ \textbf{\footnotesize 截距也算一个p}
+
+            $\cdot$ ps: $\underline{Y}$:Response Random vector; \ \ \ $\underline{\beta}$:Parameter vector;
+
+            $\cdot$ ps: $\underline{\epsilon}$:Error Random vector; \ \ \ \ \ \ \  \ \ \ \ $\textbf{\textit{X}}$:Design matrix;
+
+            \textbf{\footnotesize Sum of Squares}:$Q(\underline{\beta})$=$\sum\limits_{i=1}^{n}(y_i-\mathbb{E}[Y_i])^2=(\underline{y}-\textbf{\textit{X}}\underline{\beta})^T(\underline{y}-\textbf{\textit{X}}\underline{\beta})$
+        \end{flushleft}
+
+        \columnbreak
+
+        \begin{center}
+            \small \textbf{Estimates and some Formulas}
+        \end{center}
+        \vspace{-0.2cm}
+
+        \textbf{\small Least-Squares Estimates}: $\underline{\hat{\beta}}=(\textbf{\textit{X}}^T\textbf{\textit{X}})^{-1}\textbf{\textit{X}}^T\underline{y}$
+
+        $\cdot$ ps: Cooresponding MLE estimates for $\underbar{\beta}$ are the same.
+
+        $\mathbf{S^2_e}$ $=\frac{1}{n-p}\sum\limits_{i=1}^{n}[Y_i-\hat{Y}_i]^2=\frac{1}{n-p}(\underline{y}-\textbf{\textit{X}}\underline{\hat{\beta}})^T(\underline{y}-\textbf{\textit{X}}\underline{\hat{\beta}})$
+
+        $\cdot$ ps: $\frac{(n-p)S^2_e}{\sigma^2}\sim \chi^2_{n-p}$ \ \ \ \ \ \ (Residual Variance Estimator)
+
+        \textbf{\small Marginal Distribution}: $\frac{\hat{\beta}_j-\beta_j}{S.E.(\hat{\beta}_j)}\sim t_{n-p}$ for $j=1,2,...,p$
+
+        \textbf{\small CI for $\hat{\beta}_j$}: $\hat{\beta}_j\pm t_{n-p;\alpha/2}\widehat{S.E.}(\hat{\beta}_j)$ for $j=1,2,...,p$
+
+        $\cdot$ ps: we don't learn the S.E. formula for $\beta$
+
+        \textbf{Adjusted-$R^2$}: $R^2_{adj.}=1-(1-R^2)\frac{n-1}{n-p}$
+
+        $\cdot$ 多个x时用adj,单个x用multiple
+
+        ps: In R studio: $H_0:\beta_i=0$
+
+    \end{multicols}
+    \vspace{-0.4cm}
+
+    \subsection{ANOVA F-test for model comparison}
+
+    \textbf{Full Model}: $Y_i\stackrel{i.i.d.}{\sim}N(\beta_1x_{i,1}+\cdots+\beta_{p_0}x_{i,p_0}+\cdots+\beta_{p_1}x_{i,p_1},\sigma^2)$ \ \ \ \ ps:假设$1-p_0$是有关的,$p_0-p_1$是无关的.
+
+    \textbf{Sub-Model}: $Y_i\stackrel{i.i.d.}{\sim}N(\beta_1x_{i,1}+\cdots+\beta_{p_0}x_{i,p_0},\sigma^2)$ \ \ \ \ \ \ \ ps:$\frac{RSS_0}{\sigma^2}\sim\chi^2_{n-p_0}$, $\frac{RSS_1}{\sigma^2}\sim\chi^2_{n-p_1}$ and $\frac{RSS_0-RSS_1}{\sigma^2}\sim\chi^2_{p_1-p_0}$
+
+    \textbf{RSS (Residual sum of squares)}: $RSS_0=(n-p_0)S_0^2$ , $RSS_1=(n-p_1)S_1^2$ \ \ \ {\footnotesize ps:($S_1 \ / \ S_0$: residual var estiamtor for full model / sub model)}
+
+    \textbf{Def of ANOVA(Analysis of Variance) F-test}: Consider model $\underline{Y}=\mathbf{\mathit{X}}\underline{\beta}+\underline{\epsilon}$ where $\epsilon_i\stackrel{i.i.d}{\sim}N(0,\sigma^2)$, $\underline{\beta}=(\beta_1,...,\beta_{p_0},...,\beta_{p_1})$
+
+    \begin{enumerate}[itemsep=-2pt, topsep=-2pt]
+        \item \textbf{Hypothesis}: $H_0$: $\beta_{p_0+1}=\cdots=\beta_{p_1}=0$ \ \ \ \ \ \ vs \ \ \ \ \ \ $H_1$: $\exists j\in\{p_{0+1},...,p_1\}$ s.t. $\beta_j\ne 0$
+        \item \textbf{F-test Statistic}: $F=\frac{(RSS_0-RSS_1)/(p_1-p_0)}{RSS_1/(n-p_1)}\sim F_{p_1-p_0,n-p_1}$, under $H_0$ \ \ \ \ \ \ (ps: $F=\frac{R^2}{1-R^2}\cdot\frac{n-(p_1-1)-1}{(p_1-1)}$ {\footnotesize 对于R studio: 除了截距其他为0})
+              \\ $\cdot$ ps: 等价于：$\frac{RSS_0}{\sigma^2}\sim\chi^2_{n-p_0}$ , $\frac{RSS_0-RSS_1}{\sigma^2}\sim\chi^2_{p_1-p_0}$ and $RSS_0-RSS_1$ is independent of $RSS_1$ ; under $H_0$
+        \item \textbf{Changed Hypothesis}: $H_0:F=0$ \ \ \ \ \ \ vs \ \ \ \ \ \ $H_1:F>0$
+        \item \textbf{Critical Region}: $C=[F_{p_1-p_0,n-p_1;\alpha},+\infty)$
+    \end{enumerate}
+
+    \subsection{One-way ANOVA}
+
+    \textbf{Target}: 比较单类多组($\geq$3)之间的均值是否有显著性差异。 \ \ \ \ \ $H_0:\mu_1=\mu_2=\cdots=\mu_k$ \ \ $H_1:\mu_1,...,\mu_k$ are not all equal.
+
+$\cdot$ 这里的组可以理解为sample，如果组为2，那么就是前面的two-sample t-test.
+
+    \textbf{Definitions}: Response Variables {\small(k组，每组$n_k$个数据)}: $\underline{Y}=(Y_{1,1},...,Y_{n_1,1},...,Y_{1,k},...,Y_{n_k,k})^T$ where $Y_{i,j}\stackrel{i.i.d.}{\sim}N(\mu_i,\sigma^2)$
+
+    \ \ \ \ \ Design matrix: $\mathbf{X}=( \underline{x}_1,\underline{x}_2,...,\underline{x}_k )$ \ \ Parameters: $\underline{\beta}=\underline{\mu}=(\mu_1,...,\mu_k)^T$ \ \ \ \ \ $\mathbb{E}[ \ \underline{Y} \ ]=\mathbf{X}\underline{\mu}$
+
+    \ \ \ \ \ OR: $\tilde{\mathbf{X}}=(\underline{1},\underline{x}_2,...,\underline{x}_k)$ and $\underline{\beta}=(\mu_1,\beta_2...,\beta_k)^T$. $\beta_j=\mu_j-\mu_1$
+
+    \textbf{Estimators}: {\footnotesize $\hat{\mu}_j=\bar{y}_j$(Group Sample Mean)$=\frac{1}{n_j}\sum_{i=1}^{n_j}y_{i,j}$ \ \ \ \ \ \ Residual Variance: $S_e^2=\frac{1}{n-k}\sum_{j=1}^{k}\sum_{i=1}^{n_j}(y_{i,j}-\hat{\mu}_j)^2$ \ \ Overall Sample Mean: $\frac{1}{n}\sum_{j=1}^{k}\sum_{i=1}^{n_j}Y_{i,j}$}
+
+    \ \ $RSS_y=(n-1)S^2_y=\sum_{j=1}^{k}\sum_{i=1}^{n_j}(Y_{i,j}-\bar{Y})^2$ \ \ $RSS_b=(k-1)S^2_b=\sum_{j=1}^{k}n_j(\bar{Y}_j-\bar{Y})^2$ \ \ $RSS_e=\sum_{j=1}^{k}(n_j-1)S^2_j=\sum_{j=1}^{k}\sum_{i=1}^{n_j}(Y_{i,j}-\bar{Y}_j)^2$
+
+    \ \ ps: $RSS_y \ = \ RSS_b \ + \ RSS_e$ \ \ \ \ $RSS_e$ error residual sum of squares \textit{within} groups. \ $RSS_b$ $\sim$ \textit{between} groups.
+
+    \ \ F-test statistic: $F=\frac{(RSS_y-RSS_e)/(k-1)}{RSS_e/(n-k)}=\frac{RSS_b/(k-1)}{RSS_e/(n-k)}=\frac{S^2_b}{S^2_e}\sim F_{k-1;n-k}$ \ \ \ \ \ $C=[F_{k-1,n-k;\alpha},+\infty)$
+
+$\cdot$ ps: 用R来算，lm(y $\sim$ category1 + category2 + ..., data = ...) (ps:如果加了-1就不是！)
+
+    \ \ 截距代表: It describes the mean effect for the \{category1\}.
+
+    \ \ 其他代表: It is an estimate in the mean effect difference between \{category1\} and \{category i\}.
+
+    \subsection{Two-way ANOVA}
+
+    \textbf{Target}: 依照两个因素分组($\geq$2)时，不同分组之间的特征值的均值是否相等。 \ \ \ \text{\footnotesize (假设因素一 (二) 中所有组的变量有b(k)个)}
+
+    \textbf{Definitions}: Responsd Variables (k类): $\underline{Y}=(Y_{1,1},...,Y_{n_1,1},...,Y_{1,k},...,Y_{n_k,k})^T$ where $Y_{i,j}\stackrel{i.i.d.}{\sim}N(\mu_{i,j},\sigma^2)$ \ $\mu_{i,j}=\mu+\alpha_i+\beta_j$
+
+$\cdot$ ps: $\mu$: overall population mean. \ \ $\alpha_i$: $i^{th}$ 因素一对group的影响 \ \ $\beta_j$: $j^{th}$ 因素二对group的影响
+
+    \textbf{Estimators}: $\hat{\mu}=\bar{y}$ \ \ \ $\hat{\alpha}_i=\frac{1}{k}\sum_{j=1}^{k}y_{i,j}-\bar{y}$ \ \ \ $\hat{\beta}_j=\frac{1}{b}\sum_{i=1}^{b}y_{i,j}-\bar{y}$ \ \ \ \text{\footnotesize (By Least-Square Method)}
+
+    \ \ $\bar{y}=\frac{1}{n}\sum_{i=1}^{b}\sum_{j=1}^{k}y_{i,j}=\frac{1}{b\cdot k}\sum_{i=1}^{b}\sum_{j=1}^{k}y_{i,j}=\frac{1}{b\cdot k}\sum_{j=1}^{k}\sum_{i=1}^{b}y_{i,j}$ \ \ \ $n=k\cdot b$
+
+    \ \ \text{\footnotesize 整体数据波动(Overall)} $RSS_y=(n-1)S^2_y=\sum_{i=1}^{b}\sum_{j=1}^{k}(Y_{i,j}-\bar{Y})^2$
+
+    \ \ \text{\footnotesize 第一个因素波动} $RSS_1=(b-1)S^2_1=k\sum_{i=1}^{b}(\frac{1}{k}\sum_{j=1}^{k}y_{i,j}-\bar{Y})^2$
+
+    \ \ \text{\footnotesize 第二个因素波动} $RSS_2=(k-1)S^2_2=b\sum_{i=1}^{k}(\frac{1}{b}\sum_{j=1}^{b}y_{i,j}-\bar{Y})^2$
+
+    \ \ \text{\footnotesize 误差波动(Unexplained)} $RSS_e=(n-b-k+1)S^2_e=\sum_{i=1}^{b}\sum_{j=1}^{k}(Y_{i,j}-\frac{1}{k}\sum_{j=1}^{k}y_{i,j}-\frac{1}{b}\sum_{j=1}^{b}y_{i,j}+\bar{Y})^2$
+
+    \ \ $RSS_y=RSS_1+RSS_2+RSS_e$ \ \ \ \ \ (我们这里忽略两个因素交错影响的问题)
+
+    \textbf{Test1}: 检测因素一是否对均值有影响. \ \ \ \ \ $H_0:\alpha_1=\cdots=\alpha_b=0$ \ \ $H_1:\exists\alpha_i\ne 0$
+
+    \ \ \ \ $F_1=\frac{RSS_1/(b-1)}{RSS_e/(n-b-k+1)}=\frac{S^2_1}{S^2_e}\sim F_{b-1,n-k-b+1}$ \ \ \ \ \ $C=[F_{b-1,n-k-b+1;\alpha},+\infty)$
+
+    \textbf{Test2}: 检测因素二是否对均值有影响. \ \ \ \ \ $H_0:\beta_1=\cdots=\beta_k=0$ \ \ $H_1:\exists\beta_j\ne 0$
+
+    \ \ \ \ $F_2=\frac{RSS_2/(k-1)}{RSS_e/(n-b-k+1)}=\frac{S^2_2}{S^2_e}\sim F_{k-1,n-k-b+1}$ \ \ \ \ \ $C=[F_{k-1,n-k-b+1;\alpha},+\infty)$
+
+$\cdot$ ps: 用R来算，lm(y $\sim$ T1 + T2 + ... + B1 + B2 + ... , data = ...)
+
+    \ \ 截距代表: It describes the mean effect for the \{T1\} and \{B1\} combination.
+
+    \ \ 其他代表: It is an estimate in the mean effect difference between \{T1\} and \{T i\} \ ( or \{B1\} and \{B i\} ).
+
+    \section{Distribution Table} % Formula Table
+
+    \vspace{-0.4cm}
+    \begin{longtable}{|l||l|c|c|c|l|}
+        \hline
+        Distribution                                                                                              & PDF                                                                                                                                                     & Mean                           & Var                                                    & Other                                                                                                                                                                                      \\
+        \hline
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Binomial \\ $X\sim Bin(n,p)$\end{tabular}                                 & $\binom{n}{k}p^k(1-p)^{n-k}$                                                                                                                            & $np$                           & $np(1-p)$                                              & \begin{tabular}{@{}l@{}}$X,Y\sim Bin(n,p),Bin(m,p)$ \\ $X+Y\sim Bin(n+m,p)$\end{tabular}                                                                                                   \\
+        \hline
+        \multicolumn{5}{|l|}{For $X\sim Bin(n,p)$, $n\to\infty,p\to0,np\to \lambda$, \ \ \ \ then $X\sim Poission(\lambda)$}                                                                                                                                                                                                                                                                                                                                                                                                                                       \\
+        \multicolumn{5}{|l|}{For $X\sim Bin(n,p)$, n is large and pdf symmetric, \ \ \ \ then $X\sim N(np,np(1-p))$}                                                                                                                                                                                                                                                                                                                                                                                                                                               \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Bernoulli \\ $X\sim Bernoulli(p)$\end{tabular}                            & $\mathbb{P}(X=k)=p \ or \ 1-p $                                                                                                                            & $p$                            & $p(1-p)$                                               & \begin{tabular}{@{}l@{}} If $X_i$ are i.i.d. \\ $\sum X_i\sim Bin(n,p)$\end{tabular}                                                                                                       \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Geometric \\ $X\sim Geom(p)$\end{tabular}                                 & $(1-p)^{k-1}p$                                                                                                                                          & $\frac{1}{p}$                  & $\frac{1-p}{p^2}$                                      & $\mathbb{E}[X^2]=\frac{2}{p^2}$                                                                                                                                                            \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Uniform \\ $X\sim U([a,b])$\end{tabular} & $\frac{1}{b-a}$                                                                                                                                         & $\frac{a+b}{2}$                & $\frac{(b-a)^2}{12}$                                   & $\mathbb{E}[X^2]=\frac{b^2+ab+a^2}{3}$                                                                                                                                                     \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Exponential \\ $X\sim Exp(\lambda)$\end{tabular}                          & $\lambda e^{-\lambda x}$                                                                                                                                & $\frac{1}{\lambda}$            & $\frac{1}{\lambda^2}$                                  & $\mathbb{E}[X^n]=\frac{n!}{\lambda^n}$                                                                                                                                                     \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Poission \\ $X\sim Po(\lambda)$\end{tabular}                              & $e^{-\lambda}\cdot \frac{\lambda^k}{k!}$                                                                                                                & $\lambda$                      & $\lambda$                                              & $\mathbb{E}[X^2]=\lambda^2+\lambda$                                                                                                                                                        \\
+        \hline
+        \multicolumn{5}{|l|}{For $X,Y\sim Po(\lambda_1),Po(\lambda_2)$, then $X+Y\sim Po(\lambda_1+\lambda_1)$}                                                                                                                                                                                                                                                                                                                                                                                                                                                    \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Normal \\ $X\sim N(\mu,\sigma^2)$\end{tabular}                            & $\frac{1}{\sqrt{2\pi \sigma^2}}\cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}}$                                                                                  & $\mu$                          & $\sigma^2$                                             & -                                                                                                                                                                                          \\
+        \hline
+        \multicolumn{5}{|l|}{For $X,Y\sim N(\mu_1,\sigma^2_1),Po(\mu_2,\sigma^2_2)$, then $aX\pm Y\pm c\sim Po(a\mu_1\pm b\mu_2\pm c,a^2\sigma^2_1+b^2\sigma^2_2)$}                                                                                                                                                                                                                                                                                                                                                                                                \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Beta \\ $X\sim Beta(\alpha,\beta),\alpha,\beta >0$\end{tabular}           & $\frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)},x\in[0,1]$                                                                                         & $\frac{\alpha}{\alpha +\beta}$ & $\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$ & $B(\alpha,\beta)=\frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}$                                                                                                                 \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Gamma \\ $X\sim \Gamma(\alpha,\beta),\alpha,\beta >0$\end{tabular}     & $\frac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x},x\geq0$                                                                                    & $\frac{\alpha}{\beta}$         & $\frac{\alpha}{\beta^2}$                               & \begin{tabular}{@{}l@{}} $\Gamma(\alpha)=(\alpha -1)!$ \\ $\Gamma(\alpha)=\int^\infty_0x^{\alpha-1}e^{-x}dx$\end{tabular}                                             \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Chi-Squared \\ $X\sim \chi^2_v,v>0$\end{tabular}                          & $\frac{1}{2^{\frac{v}{2}}\Gamma(\frac{v}{2})}x^{\frac{v}{2}-1}e^{-\frac{x}{2}},x\geq0$                                                                  & $v$                            & $2v$                                                   & -                                                                                                                                                                                          \\
+        \hline
+        \multicolumn{5}{|l|}{If $X_i\sim N(0,1), \ then \  \sum X_i^2\sim \chi_n^2$ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ If $X\sim \chi^2_n,Y\sim \chi^2_m, \ then \ X+Y\sim \chi^2_{n+m}$}                                                                                                                                                                                                                                                                                                                                                                             \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}Student's t \\ $X\sim t_v,v>0$\end{tabular}                               & $\frac{1}{\sqrt{v}B(\frac{v}{2},\frac{1}{2})}(1+\frac{x^2}{v})^{-\frac{v+1}{2}}$                                                                        & $0$                            & $\frac{v}{v-2}$                                        & \begin{tabular}{@{}l@{}} If $Z\sim N(0,1),Y\sim \chi^2_n$ \\ $\frac{Z}{\sqrt{Y/n}}\sim t_n$\end{tabular}                                                                                \\
+        \hline
+        \multicolumn{5}{|l|}{PDF Symmetric at zero and has more mass in the tails (compare to the standard normal distribution)}                                                                                                                                                                                                                                                                                                                                                                                                                                   \\
+        \multicolumn{5}{|l|}{When $n\to\infty$ it will converges to $N(0,1)$.\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{Cauchy Distribution}: $X\sim t_1$ and its mean and var are undefined.}                                                                                                                                                                                                                                                                                                                                                                  \\
+        \hline
+        \begin{tabular}{@{}p{4.05cm}@{}}F \\ $X\sim F(\lambda,v),v>0$\end{tabular}                                & $\frac{\lambda^{\frac{\lambda}{2}}v^{\frac{v}{2}}}{B(\frac{\lambda}{2},\frac{v}{2})}x^{\frac{\lambda}{2}-1}(\lambda x+v)^{-\frac{\lambda+v}{2}},x\geq0$ & $\frac{v}{v-2}$                & $\frac{2v^2(\lambda+v-2)}{\lambda(v-2)^2(v-4)},v>4$    & \begin{tabular}{@{}l@{}} $Y_1,Y_2\sim\chi^2_{n_1},\chi^2_{n_2},X=\frac{Y_1/n_1}{Y_2/n_2}$ \\ $X\sim F_{n_1,n_2},X^{-1}\sim F_{n_2,n_1}$\end{tabular} \\
+        \hline
+        \multicolumn{5}{|l|}{ps: $f_{a,b;\alpha}=1/f_{a,b;1-\alpha}$}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              \\
+        \hline
+    \end{longtable}
+    \vspace{-0.4cm}
+
+    \section{R Language}
+
+    \textbf{> anova(model)}
+    \vspace{-0.4cm}
+    \begin{longtable}{c|ccccc}
+                & Deg.free & Res.Sum Sq.         & Mean Sum Sq.        & F-value         & p-value \\
+        \hline
+        between & $k-1$    & $RSS_b=RSS_y-RSS_e$ & $S^2_b=RSS_b/(k-1)$ & $F=S^2_b/S^2_e$ & p       \\
+        within  & $n-k$    & $RSS_e$             & $S^2_e=RSS_e/(n-k)$ &                 &         \\
+        \hline
+        Total   & $n-1$    & $RSS_y$             & $S^2_y=RSS_y/(n-1)$ &                 &         \\
+    \end{longtable}
+    \vspace{-0.4cm}
+$\cdot$ ps: one-way ANOVA table
+
+    \begin{longtable}{c|ccccc}
+                  & Deg.free  & Res.Sum Sq. & Mean Sum Sq. & F-value & p-value \\
+        \hline
+        category1 & $b-1$     & $RSS_1$     & $S^2_1$      & $F_1$   & $p_1$   \\
+        category2 & $k-1$     & $RSS_2$     & $S^2_2$      & $F_2$   & $p_1$   \\
+        residuals & $n-k-b+1$ & $RSS_e$     & $S^2_e$      &         &         \\
+        \hline
+        Total     & $n-1$     & $RSS_y$     & $S^2_y$      &         &         \\
+    \end{longtable}
+    \vspace{-0.4cm}
+$\cdot$ ps: two-way ANOVA table \ \ \ \ \ \ \ \ \ ps: R: >pnorm(p,mean,std)  \ \ \ \ \ \ \ \ \ ps: R: {\small linear regression R 给的F-statistic $H_0$:除了截距其他为0}
+
+    \section{Definitions and Assumptions}
+
+    \fontsize{7}{7}\selectfont
+    \setlength{\parindent}{0pt}
+
+    \textbf{Population}: The probability distribution that describes the frequency with which makes up all events or items for a specified research question is called the population distribution.
+    \textbf{Population Parameter}: Typically, we are only interested in some characteristic of the population, e.g. the expectation $\mu$, which we call the population parameter.
+    \textbf{Sample (size)}: To investigate this, we define a sub-group of the population as sequence of random variables $X_1,...,X_n$, where $n$ denotes the sample size.
+    \textbf{Representative}: If all events or items from the population has equal chance of being selected then we say that the obtained sample, $x_1,...,x_n$, is representative of the population.
+    \textbf{Statistic}: Any summarising transformation of $x_1,...,x_n$ that describes the sample, e.g. the sample mean, is called a statistic.
+    \textbf{Estimator}: A function of the random variables, $T=g(X_1,...,X_n)$, is called an estimator if its purpose is to describe $\mu$.
+    \textbf{Estimate}: When the purpose of T is to describe $\mu$, then the calculated value $t$ is then an estimate for $\mu$.
+    \textbf{Sampling Distribution}: $T$ is a function of random variables and so is random variable itself with a probability distribution called the sampling distribution.
+
+    \textbf{Quantify unsertainty}: 1.The uncertainty within the sample. 2.The uncertainty from the sampling.
+
+    \textbf{Point Estimate}: Summaries such as the sample mean, sample variance and sample median are examples of point estimates.
+    \textbf{Sampling Variation}: As these are summaries of the available data, they are subject to Sampling Variation.
+    \textbf{Estimate Uncertainty}: Consequently, these statistics should ideally be accompanied with an estimate of uncertainty.
+    \textbf{Confidence Interval}: An example of this is a interval.
+    \textbf{Confidence Level}: The width of this interval depends on the specified confidence level. We should expect that an interval to be narrower if we increase the sample size. When considering multiple representative samples from the population with the same sample size, the computed intervals will be \textbf{different}.This means that the interval \textbf{may not} contain the specific population parameter begin investigated.
+
+    \vspace{-0.2cm}
+    \rule{\linewidth}{0.2pt}
+    \vspace{-0.4cm}
+
+    \fontsize{10}{10}\selectfont
+
+    % Basic Distribution, Unbiased / Consistent, MLE
+    \textbf{Basic Distribution, Unbiased / Consistent, MLE}
+
+    \textbf{Assumption|Distribution, probability}: Let $p/\theta$ denote the probability of $\{?\}$ that ... where $X_i\sim \{?\}(p/\theta)$
+
+    \textbf{Def|Unbiased}：An estimator is unbiased if, on average, it equals the true value of the parameter it's estimating.
+
+    \textbf{Special|$\sqrt{S^2}$}: $\sqrt{S^2}$ is biased for $\sigma$ at \underline{finite} sample size. Because $\mathbb{E}[S]=\mathbb{E}[\sqrt{S^2}]\ne\sqrt{\mathbb{E}[S^2]}=\sqrt{\sigma^2}=\sigma$.
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ If $S^2$ is consistent in estimating $\sigma^2$, then S is Asymptotically unbiased in estimating $\sigma$.
+
+    \textbf{Def|Consistent}: An estimator is consistent if it converges in probability to the true value of the parameter p as the sample size increases indefinitely.
+
+    \textbf{Assumption|Calculate Estimator}: Let random variables sequence $X_1,...,X_n$ represent independent $\{?:e.g.sample\}$ from a common distribution $\{?\}$, represented by random variable $X$, that depends on the population parameter $\{?\}$.
+
+    \textbf{Assumption|Calculate Maximum Likelihood}: Suppose that we have $n$ independent observations $x_1,...,x_n$ drawn from an $\{?\}$ distribution, with probability density function $f_x=\{?\}$. Then...
+
+    \textbf{Reason|$\hat{\sigma}=\sqrt{\hat{\sigma^2}}$}: It's due to the invariant property of MLEs.
+
+    \textbf{Reason|Uncertainty Come from}: The source of uncertainty in (or in CI) an estimate comes from the principal of repeated sampling from the population. 
+
+    \textbf{Reason|Parameter not Random (no have uncertainty)}:The true $\{?\}$ population parameter is assumed to be fixed (not random)
+    % End
+
+    \textbf{}
+
+    % CI / PI
+    \textbf{CI / PI}
+
+    \textbf{Conclusion|Confidence Interval}: we are $\{?\}\%$ confident that the true $\{?\}$ is between $\{?\} \ and \ \{?\}$
+
+    \textbf{Assumption|Confidence Interval}: Let $X_1,...,X_n$ be independent and identically distributed $\{?:distribution\}$ random variables, where $\{?\}$ is unknown/known ...
+
+    \textbf{Def|Confidence Interval}: An interval of uncertainty for the fitted regression line, given the explantory variable $x_0$.
+
+    \textbf{Def|Prediction Interval}: An interval of uncertainty for a future observation $y_0$, given the explantory variable $x_0$.
+
+    \textbf{Difference|CI and PI}: PI > CI, because it's accounts fro the additional variability of the single observations, since $\sigma^2>0$
+
+    \textbf{Reason|Why using narrower CI Interval (conver more information)}: The narrower CI conveys more information about $\{?\}$.
+
+    \textbf{Reason|$\bar{x}=(left+right)/2$}: The confidence interval for the $\{\mu\}$ is centred on $\bar{x}$
+
+    \textbf{Reason|$\mathbb{P}(\mu<left)=\alpha/2$ is false}: We cannot make such probability statement. $\{\mu\}$ is a fixed value (but unknown).
+    % End
+
+    \textbf{}
+
+    % Linear Regression
+    \textbf{Linear Regression}
+
+    \textbf{Reason|Why not relation / one increase will lead other increase}: Correlation is not Causation. A linear regression model can only describes correlated relationship.
+
+    \textbf{Reason|$x_i$ are not causal factor for Y}: Regression states a correlation not a causation.
+
+    \textbf{Reason|Why MLE and Least Squares Estimation are the same}: The functional form of the (log-)likelihood being a sum of squared differences.
+
+    \textbf{Steps|Hypothesis test}:
+    \begin{enumerate}[itemsep=-3pt, topsep=-2pt]
+        \item Hypothesis: Let $X_1,...,X_n$ denote ..., therefore we proposed the following Null and Alternative hypothesis statements: $H_0:\{e.g.\mu=0\}$ and $H_1:\{e.g.\mu\ne0\}$.
+        \item Theory: we define the test statistic $\{?\}$. At the $\{?\}$ Significance level, the critical value (critical region) for Rejecting the null Hypothesis is $\{?\}$.
+        \item Apply: ... the observed test is \{?\}
+        \item Conclusion: $As$ $z\in C \ (z\notin C)$, + Conclusion of Hypothesis test. + (可选,就如果我们假设A对，但证出B对，问A没证出的原因) (i). A type II(type I) error could have occurred where the available evidence does not disagree with the null Hypothesis despite the statement being false.(ii). The ? could be ? in some other way that was not explored by this experiment.
+    \end{enumerate}
+
+    \textbf{Assumption|Power-value Calculate}: Suppose that $\{?\}$ has changed the $\{?\}$ to now be $\{?:e.g.\mu^*\}$, then $\{?:e.g.\bar{X}\sim N(\mu^*,\sigma^2)\}$.
+
+    \hspace*{3.5cm}So the power of our hypothesis test is: ...
+
+    \hspace*{3.5cm}$\left(e.g.\mathbb{P}(Z\in C|\mu=\mu^*)=\mathbb{P}(z<z_{1-\alpha}|\mu=\mu^*)=\mathbb{P}(z-\frac{\mu^*-\mu_0}{\sqrt{\sigma^2/n}}<z_{1-\alpha}-\frac{\mu^*-\mu_0}{\sqrt{\sigma^2/n}}|\mu=\mu^*)=\Phi(z_{1-\alpha}-\frac{\mu^*-\mu_0}{\sqrt{\sigma^2/n}})\right)$
+
+    \textbf{Assumption|Normal Linear Regression}:
+    \begin{enumerate}[itemsep=-3pt, topsep=-2pt]
+        \item Independence between response variables.
+        \item Linearity of the expectation variable.
+        \item Have the same variance.
+        \item Normally distributed.
+        \item (可选，对于ANOVA) The assumption can be expressed as: $Y_{i,j}\stackrel{i.i.d.}{\sim}N(\mu_{i,j},\sigma^2),\mu_{i,j}=\alpha_i+\beta_j$
+    \end{enumerate}
+
+    \textbf{Steps|Determine the Linear Model}: $\{e.g.Y_{i,j,k}=\alpha_i+\beta_j+\epsilon_{ijk}\}$ , The \{$e.g.Y_{i,j,k}$ denote the response variables ...\}, the \{e.g.$\alpha_i$ denote the effect of ... on ...\} ... ; And the \{e.g.$\varepsilon_{ijk}$ denote tghe random error associated with i,j,k ...\}
+
+    \textbf{Steps|Determine the Linear Model (category)}: Let $Y_{i,j}$ denote the $\{?:y\}$ .. (见5.3,5.4 Y的定义). Define $\{?:category1-group1\}$,$\{?:category2-group1\}$ as the baseline case and denote the following binary variables: $x_{i,j,2}=\{1,if \ \ i=?; \ 0,otherwise$ (全部都写). The linear regression model is then defines as: $\{?:e.g.Y_{i,j}=\beta_0+\beta_1x_{i,j,2}++\beta_2x_{i,j,3}++\beta_3z_{i,j,1}+\epsilon_{i,j}\}$ where the independent random error $\epsilon_{i,j}$ follows a normal distribution with expectation zero and common variance $\sigma^2$: $\{?\}\sim\{?\}$ $\cdot$ $Y_{i,j}$ donote $i^{th}$ observation belonging $j^{th}$ category. \ \ \ \ $x_{i,j;r}=\mathbb{1}[$if $Y_{i,j}$ refers to category r$]$
+
+\textbf{Comment|Conclusion of the Hypothesis}
+\begin{enumerate}[itemsep=-3pt, topsep=-2pt]
+    \item p-value is not the probability that the null hypothesis is true. It is the probability of observing at least an extreme a value as the observed test statistic given that $H_0$ is true.
+    \item Not come from the same sample.
+    \item It cannot accept / make sure,...
+\end{enumerate}
+
+\textbf{Comment|Comment in Linear Model}
+\begin{enumerate}[itemsep=-3pt, topsep=-2pt]
+    \item There is a positive (negative) relationship between \{?e.g.y\} and \{?e.g.x\}
+    \item R-Squared value is only $\{?\}$ suggesting that the model does not explain all the observed variability.
+    \item We could remove the $\{variable\}$ as it's p-value is too large.
+\end{enumerate}
+
+\textbf{Comment|Effect of the explantory variables on the response variable in model}:  When \{x\} will increases 1 unit, the \{y\} will increases (decreasing) \{n\}.
+% End
+
+\end{document}
+z
